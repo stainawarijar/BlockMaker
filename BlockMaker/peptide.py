@@ -51,8 +51,8 @@ class Peptide():
                 # Replace H in cysteine -SH group by -CH2-CO-NH2 group, for each cysteine
                 peptide_composition["carbons"] += 2 * self.sequence.count("C")
                 peptide_composition["hydrogens"] += 3 * self.sequence.count("C") # Difference of 3 H
-                peptide_composition["nitrogens"] += 1 * self.sequence.count("C")
-                peptide_composition["oxygens"] += 1 * self.sequence.count("C")
+                peptide_composition["nitrogens"] += self.sequence.count("C")
+                peptide_composition["oxygens"] += self.sequence.count("C")
             elif self.cysteine_treatment == "acid":
                 # Replace H in cysteine -SH group by -CH2-CO-OH group, for each cysteine
                 peptide_composition["carbons"] += 2 * self.sequence.count("C")
