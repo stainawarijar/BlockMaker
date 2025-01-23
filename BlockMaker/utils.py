@@ -9,9 +9,9 @@ def get_input_sequence():
     Return the capitalized sequence as a string.
     '''
     while True:
-        input_sequence = input("\nEnter your peptide sequence: ").upper()  # Capitalize letters
+        input_sequence = input("\nEnter your peptide sequence: ").strip().upper()  # Capitalize letters
         # Loop over each character in the input sequence and look for invalid entries
-        invalid_positions = []     
+        invalid_positions = []    
         invalid_characters = [] 
         for i, char in enumerate(input_sequence):
             if not char in aa.compositions.keys():
@@ -40,7 +40,7 @@ def get_block_name():
     Return the input name as a string after checking its validity.
     '''
     while True:
-        input_name = input("\nEnter name for your block file: ")
+        input_name = input("\nEnter name for your block file: ").strip()
         if not input_name.isalpha():
             print("\nThe name of your block file can only contain letters.")
         else:
