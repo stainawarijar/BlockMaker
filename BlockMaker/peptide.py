@@ -88,9 +88,9 @@ class Peptide():
         # Check cysteine modifications
         if self.cysteine_treatment is not None:
             if self.cysteine_treatment == "amide":
-                peptide_mass += (constants.ACETAMIDE_GROUP_MASS - constants.HYDROGEN_MASS)
+                peptide_mass += (constants.ACETAMIDE_GROUP_MASS - constants.HYDROGEN_MASS) * self.sequence.count("C")
             elif self.cysteine_treatment == "acid":
-                peptide_mass += (constants.ACETIC_ACID_GROUP_MASS - constants.HYDROGEN_MASS)
+                peptide_mass += (constants.ACETIC_ACID_GROUP_MASS - constants.HYDROGEN_MASS) * self.sequence.count("C")
 
         # Check methionine oxidation
         if self.methionine_oxidation is not None:
@@ -117,6 +117,7 @@ class Peptide():
             f"\n\tOxygens = {self.composition["oxygens"]}"
             f"\n\tSulfurs = {self.composition["sulfurs"]}"
         )
+        
         # Create list with lines that should be written
         # "\t" is used to separate named and numbers by a tab
         lines = [
@@ -128,10 +129,12 @@ class Peptide():
             "oxygens" + "\t" + str(self.composition["oxygens"]),
             "sulfurs" + "\t" + str(self.composition["sulfurs"])
         ]
+
         # Write each line to the file
         filename = self.name + ".block"
         with open(filename, "w") as file:
             for line in lines:
                 file.write(line + "\n")
+                
         # Print location of the created block file.
         print(f"\n'{self.name}.block' file created in directory '{os.getcwd()}'")
