@@ -1,3 +1,23 @@
+from . import constants
+
+
+def calculate_amino_acid_mass(composition):
+    '''
+    Calculate the masses of an amino acid based on its elemental composition.
+    Used to generate dictionary of amino acid masses.
+    Input 'amino_acid_composition' is a dictionary.
+    Return mass (amu) as a float.
+    '''
+    mass = (
+        composition["carbons"] * constants.CARBON_MASS +
+        composition["hydrogens"] * constants.HYDROGEN_MASS +
+        composition["oxygens"] * constants.OXYGEN_MASS +
+        composition["nitrogens"] * constants.NITROGEN_MASS +
+        composition["sulfurs"] * constants.SULFUR_MASS
+    )      
+    return mass
+
+
 # Dictionary with amino acid residue elemental compositions (full composition minus H2O)
 compositions = {
     "A": {"carbons": 3, "hydrogens": 5, "nitrogens": 1, "oxygens": 1, "sulfurs": 0},    # Alanine (Ala)
@@ -24,25 +44,6 @@ compositions = {
 
 
 # Dictionary with monoisotopic masses of amino acid residues
-masses = {
-    "A": 71.03712,
-    "R": 156.10112,
-    "N": 114.04293,
-    "D": 115.02695,
-    "C": 103.00919,
-    "E": 129.04260,
-    "Q": 128.05858,
-    "G": 57.02147,
-    "H": 137.05891,
-    "I": 113.08407,
-    "L": 113.08407,
-    "K": 128.09497,
-    "M": 131.04049,
-    "F": 147.06842,
-    "P": 97.05277,
-    "S": 87.03203,
-    "T": 101.04768,
-    "W": 186.07932,
-    "Y": 163.06333,
-    "V": 99.06842
-}
+# Calculated based on elemental compositions
+masses = {aa: calculate_amino_acid_mass(composition) for aa, composition in compositions.items()}
+

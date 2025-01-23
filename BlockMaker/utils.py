@@ -1,11 +1,9 @@
-from .resources import amino_acids as aa
-
+from .resources import amino_acids
 
 
 def get_input_sequence():
     '''
-    Let the user input the amino acid sequence of the peptide using single-letter code..
-    The validity of the sequence is checked, and letters automatically capitalized.
+    Let the user input the amino acid sequence of the peptide using single-letter code.
     Return the capitalized sequence as a string.
     '''
     while True:
@@ -14,7 +12,7 @@ def get_input_sequence():
         invalid_positions = []    
         invalid_characters = [] 
         for i, char in enumerate(input_sequence):
-            if not char in aa.compositions.keys():
+            if not char in amino_acids.compositions.keys():
                 invalid_positions.append(i + 1)  # Add index plus 1, so counting starts at 1
                 invalid_characters.append(char)
         # Check if there are invalid entries
@@ -50,7 +48,7 @@ def get_block_name():
 def get_cysteine_treatment():
     '''
     Ask the user for treatment of cysteine residues.
-    Return a string: 'untreated', 'amide' or 'acid'
+    Return a string: 'untreated', 'amide' or 'acid'.
     '''
     treatments = ["untreated", "amide", "acid"]
     while True:
@@ -78,7 +76,7 @@ def get_cysteine_treatment():
 def get_methionine_oxidation():
     '''
     Ask user whether methionine residues should be treated as oxidized.
-    Return boolean: True (oxidized) or False (non-oxidized)
+    Return boolean: True (oxidized) or False (non-oxidized).
     '''
     while True:
         choice = input("\nShould methionine (M) residues be considered oxidized? [Y/N]: ").strip().upper()

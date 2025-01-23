@@ -1,9 +1,8 @@
 import os
 
 from . import utils
-from .resources import amino_acids as aa
+from .resources import amino_acids
 from .resources import constants
-
 
 
 class Peptide():
@@ -13,13 +12,13 @@ class Peptide():
         self.cysteine_treatment = utils.get_cysteine_treatment() if "C" in sequence else None
         self.methionine_oxidation = utils.get_methionine_oxidation() if "M" in sequence else None
         self.composition = self.get_composition()
-        self.mass = self.get_mass()
+        self.mass = self.calculate_peptide_mass()
         
 
     def get_composition(self):
         '''
         Determine elemental composition based on peptide sequence.
-        Ask for cysteine treatment and methionine oxidation when applicable.
+        Include cysteine treatment and methionine oxidation when applicable.
         Return a dictionary with number of carbon, hydrogen, nitrogen, oxygen and sulfur atoms.
         '''
         # Initialize dictionary with elements.
@@ -34,7 +33,7 @@ class Peptide():
         # Loop over amino acids in the sequence
         for amino_acid in self.sequence:
             # Get composition of this amino acid residue
-            amino_acid_composition = aa.compositions[amino_acid]
+            amino_acid_composition = amino_acids.compositions[amino_acid]
             # Add up elements
             peptide_composition["carbons"] += amino_acid_composition["carbons"]
             peptide_composition["hydrogens"] += amino_acid_composition["hydrogens"]
@@ -69,10 +68,10 @@ class Peptide():
         return peptide_composition
         
         
-    def get_mass(self):
+    def calculate_peptide_mass(self):
         '''
         Calculate the monoisotopic mass of the peptide based on its sequence.
-        Ask for cysteine treatment and methionine oxidation when applicable.
+        Include cysteine treatment and methionine oxidation when applicable.
         Return the mass in amu rounded to five decimals.
         '''
         # Initiate mass at 0
@@ -80,7 +79,7 @@ class Peptide():
 
         # Loop over the amino acids and add mass of each residue
         for amino_acid in self.sequence:
-            peptide_mass += aa.masses[amino_acid]
+            peptide_mass += amino_acids.masses[amino_acid]
 
         # Add mass of H2O
         peptide_mass += constants.WATER_MASS
@@ -98,8 +97,8 @@ class Peptide():
                 # Add oxygen mass for each methionine residue
                 peptide_mass += constants.OXYGEN_MASS * self.sequence.count("M")
 
-        # Return mass rounded to five decimals
-        return round(peptide_mass, 5)
+        # Return mass rounded to nine decimals
+        return round(peptide_mass, 9)
     
 
     def write_block_file(self):
@@ -121,7 +120,7 @@ class Peptide():
         # Create list with lines that should be written
         # "\t" is used to separate named and numbers by a tab
         lines = [
-            "mass" + "\t" + f"{self.mass:.5f}",  
+            "mass" + "\t" + f"{self.mass:.9f}",  
             "available_for_charge_carrier" + "\t" + "0",
             "carbons" + "\t" + str(self.composition["carbons"]),
             "hydrogens" + "\t" + str(self.composition["hydrogens"]),

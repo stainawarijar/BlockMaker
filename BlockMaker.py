@@ -2,7 +2,6 @@ from BlockMaker import utils
 from BlockMaker.peptide import Peptide
 
 
-
 def main():
     # Ask for user input and generate block file.
     while True:
