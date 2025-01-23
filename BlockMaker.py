@@ -5,7 +5,7 @@ from BlockMaker.peptide import Peptide
 
 def main():
     # Print a nice welcome message
-    BLUE = "\033[34m"
+    BLUE = "\033[94m"
     RESET = "\033[0m"  # Reset to default color
     print(f"{BLUE}\n \U0001F308  Welcome to BlockMaker! \U0001F308{RESET}")
     
