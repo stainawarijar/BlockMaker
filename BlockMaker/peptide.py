@@ -111,11 +111,11 @@ class Peptide():
         print(
             f"\nWriting sequence '{self.sequence}' info to block file '{self.name}.block':"
             f"\n\tMass = {self.mass:.5f}" 
-            f"\n\tCarbons = {self.composition["carbons"]}"
-            f"\n\tHydrogens = {self.composition["hydrogens"]}"
-            f"\n\tNitrogens = {self.composition["nitrogens"]}"
-            f"\n\tOxygens = {self.composition["oxygens"]}"
-            f"\n\tSulfurs = {self.composition["sulfurs"]}"
+            f"\n\tCarbons = {self.composition['carbons']}"
+            f"\n\tHydrogens = {self.composition['hydrogens']}"
+            f"\n\tNitrogens = {self.composition['nitrogens']}"
+            f"\n\tOxygens = {self.composition['oxygens']}"
+            f"\n\tSulfurs = {self.composition['sulfurs']}"
         )
         
         # Create list with lines that should be written
