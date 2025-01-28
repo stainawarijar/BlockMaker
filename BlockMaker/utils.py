@@ -81,7 +81,7 @@ def get_cysteine_treatment():
             if choice.strip() == "1":
                 write_to_log("Cysteine (C) residues untreated (reduced form).")
                 print("\nCysteine residues untreated (reduced form).")
-            elif choice.strip == "2":
+            elif choice.strip() == "2":
                 write_to_log("Cysteine (C) residues treated with iodo- or chloroacetamide.")
                 print("\nCysteine residues treated with iodo- or chloroacetamide.")
             else:
