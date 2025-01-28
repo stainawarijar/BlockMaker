@@ -1,3 +1,4 @@
+import datetime
 import os
 
 from . import utils
@@ -106,9 +107,9 @@ class Peptide():
         Create block file based on composition and mass of the peptide.
         The location of the block file is printed for the user.
         '''
-        # Print info in terminal
-        print(
-            f"\nWriting sequence '{self.sequence}' info to block file '{self.name}.block':"
+        # Print info in terminal and write to log
+        message = (
+            f"Writing sequence '{self.sequence}' info to block file '{self.name}.block':"
             f"\n\tMass = {self.mass:.5f}" 
             f"\n\tCarbons = {self.composition['carbons']}"
             f"\n\tHydrogens = {self.composition['hydrogens']}"
@@ -116,6 +117,8 @@ class Peptide():
             f"\n\tOxygens = {self.composition['oxygens']}"
             f"\n\tSulfurs = {self.composition['sulfurs']}"
         )
+        utils.write_to_log(message)
+        print(f"\n{message}")
         
         # Create list with lines that should be written
         # "\t" is used to separate named and numbers by a tab
@@ -136,4 +139,5 @@ class Peptide():
                 file.write(line + "\n")
                 
         # Print location of the created block file.
+        utils.write_to_log(f"'{self.name}.block' file created in directory '{os.getcwd()}'")
         print(f"\n'{self.name}.block' file created in directory '{os.getcwd()}'")

@@ -1,5 +1,19 @@
+import datetime
+
 from .resources import amino_acids
 
+
+
+def write_to_log(message):
+    '''Write message to log file with date and time'''
+    with open("BlockMaker.log", "a") as file:  # Use "a" to append to the file
+        timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        if message.startswith("Start processing sequence"):
+            # Add empty line before new sequence
+            file.write(f"\n\n{timestamp} \t - \t {message}")
+        else:
+            file.write(f"\n{timestamp} \t - \t {message}")
+        
 
 def get_input_sequence():
     '''
@@ -28,6 +42,7 @@ def get_input_sequence():
             print(f"\nCharacters {characters_join} at positions {positions_join} "
                   "do not correspond to any amino acids.")
         else:
+            write_to_log(f"Start processing sequence '{input_sequence}'")
             return input_sequence
     
 
@@ -62,12 +77,15 @@ def get_cysteine_treatment():
         if not choice.strip() in ["1", "2", "3"]:
             print("\nInvalid input. Please enter '1', '2' or '3'")
         else:
-            # Print choice
+            # Print choice and write to log file
             if choice.strip() == "1":
+                write_to_log("Cysteine (C) residues untreated (reduced form).")
                 print("\nCysteine residues untreated (reduced form).")
             elif choice.strip == "2":
+                write_to_log("Cysteine (C) residues treated with iodo- or chloroacetamide.")
                 print("\nCysteine residues treated with iodo- or chloroacetamide.")
             else:
+                write_to_log("Cysteine (C) residues treated with iodo- or chloroacetic acid.")
                 print("\nCysteine residues treated with iodo- or chloroacetic acid.")
             # Return choice
             return treatments[int(choice) - 1]
@@ -81,11 +99,13 @@ def get_methionine_oxidation():
     while True:
         choice = input("\nShould methionine (M) residues be considered oxidized? [Y/N]: ").strip().upper()
         if choice == "Y":
+            write_to_log("Methionine (M) residues considered oxidized.")
             print("\nMethionine residues considered oxidized.")
             return True
         elif choice == "N":
+            write_to_log("Methionine (M) residues not considered oxidized.")
             print("\nMethionine residues not considered oxidized.")
             return False
         else:
-            print("\nInvalid input. Please enter 'Y' (yes) or 'N' (no).")
+            print("Invalid input. Please enter 'Y' (yes) or 'N' (no).")
 
