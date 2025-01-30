@@ -1,7 +1,5 @@
 import datetime
-
 from .resources import amino_acids
-
 
 
 def write_to_log(message):
@@ -10,9 +8,9 @@ def write_to_log(message):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if message.startswith("Start processing sequence"):
             # Add empty line before new sequence
-            file.write(f"\n\n{timestamp} \t - \t {message}")
+            file.write(f"\n\n{timestamp}\t{message}")
         else:
-            file.write(f"\n{timestamp} \t - \t {message}")
+            file.write(f"\n{timestamp}\t{message}")
         
 
 def get_input_sequence():
@@ -31,18 +29,22 @@ def get_input_sequence():
                 invalid_characters.append(char)
         # Check if there are invalid entries
         if len(invalid_positions) == 1:
-            print(f"\nCharacter '{invalid_characters[0]}' at position {invalid_positions[0]} "
-                  "does not correspond to any amino acid.")
+            print(
+                f"\nCharacter '{invalid_characters[0]}' at position {invalid_positions[0]} "
+                "does not correspond to any amino acid."
+            )
         elif len(invalid_positions) > 1:
             positions_join = ", ".join(map(str, invalid_positions[:-1])) + " and " + str(invalid_positions[-1])
             characters_join = (
                 ", ".join(f"'{item}'" for item in invalid_characters[:-1]) + 
                 " and '" + str(invalid_characters[-1]) + "'"
             )
-            print(f"\nCharacters {characters_join} at positions {positions_join} "
-                  "do not correspond to any amino acids.")
+            print(
+                f"\nCharacters {characters_join} at positions {positions_join} "
+                "do not correspond to any amino acids."
+            )
         else:
-            write_to_log(f"Start processing sequence '{input_sequence}'")
+            write_to_log(f"Start processing sequence '{input_sequence}'...")
             return input_sequence
     
 
