@@ -26,28 +26,28 @@ class Peptide():
         else:
             treatments = ["untreated", "amide", "acid"]
             while True:
-                choice_treatment = input(
+                input_treatment = input(
                     "\nSelect a treatment for your cysteine (C) residues:"
                     "\n\t[1] None (reduced form)"
                     "\n\t[2] Iodo- or chloroacetamide"
                     "\n\t[3] Iodo- or chloroacetic acid"
                     "\nEnter your choice: "
                 )
-                if not choice_treatment.strip() in ["1", "2", "3"]:
+                if not input_treatment.strip() in ["1", "2", "3"]:
                     print("\nInvalid input. Please enter '1', '2' or '3'")
                 else:
                     # Print choice and write to log file
-                    if choice_treatment.strip() == "1":
+                    if input_treatment.strip() == "1":
                         utils.write_to_log("Cysteine (C) residues untreated (reduced form).")
                         print("\nCysteine residues untreated (reduced form).")
-                    elif choice_treatment.strip() == "2":
+                    elif input_treatment.strip() == "2":
                         utils.write_to_log("Cysteine (C) residues treated with iodo- or chloroacetamide.")
                         print("\nCysteine residues treated with iodo- or chloroacetamide.")
                     else:
                         utils.write_to_log("Cysteine (C) residues treated with iodo- or chloroacetic acid.")
                         print("\nCysteine residues treated with iodo- or chloroacetic acid.")
                     # Return choice
-                    return treatments[int(choice_treatment) - 1]
+                    return treatments[int(input_treatment) - 1]
                 
     
     
@@ -61,17 +61,17 @@ class Peptide():
             return None
         else:
             while True:
-                choice_oxidation = input("\nShould methionine (M) residues be considered oxidized? [Y/N]: ").strip().upper()
-                if choice_oxidation == "Y":
+                input_oxidation = input("\nShould methionine (M) residues be considered oxidized? [Y/N]: ").strip().upper()
+                if input_oxidation == "Y":
                     utils.write_to_log("Methionine (M) residues considered oxidized.")
                     print("\nMethionine residues considered oxidized.")
                     return True
-                elif choice_oxidation == "N":
+                elif input_oxidation == "N":
                     utils.write_to_log("Methionine (M) residues not considered oxidized.")
                     print("\nMethionine residues not considered oxidized.")
                     return False
                 else:
-                    print("Invalid input. Please enter 'Y' (yes) or 'N' (no).")
+                    print("\nInvalid input. Please enter 'Y' (yes) or 'N' (no).")
 
 
     def get_isotope_labeling(self):
@@ -80,7 +80,38 @@ class Peptide():
         If yes, return a list with amino acids that are labeled.
         If no, return None.
         '''
-        pass
+        while True:
+            input_labeling = input(
+                "\nDoes the peptide contain amino acid residues labeled with "
+                "stable isotopes C-13 and N-15? [Y/N]: "
+            ).strip().upper()
+            if input_labeling == "N":
+                return None
+            elif input_labeling == "Y":
+                while True:
+                    # Let user specify labeled amino acids
+                    input_amino_acids = input("\nEnter all labeled amino acids (separated by commas or spaces): ")
+                    # Remove all spaces, commas and duplicate entries
+                    labeled_amino_acids = ''.join(set(input_amino_acids.replace(",", "").replace(" ", ""))).upper()
+                    # Check input for validity
+                    if not labeled_amino_acids.isalpha():
+                        print("\nInvalid input. Enter letters separated by commas or spaces.")
+                    else:
+                        invalid_entries = False
+                        for aa in labeled_amino_acids:
+                            if not aa in self.sequence:
+                                invalid_entries = True
+                                print(f"\n{aa} is not present in the peptide sequence!")
+                        if invalid_entries:
+                            continue
+                        else:
+                            # Print message and write to log
+                            utils.write_to_log(f"{', '.join(labeled_amino_acids)} labeled with C-13 and N-15.")
+                            print(f"\n{', '.join(labeled_amino_acids)} labeled with C-13 and N-15.")
+                            # Return labeled amino acids in a list
+                            return [aa for aa in labeled_amino_acids]
+            else:
+                print("\nInvalid input. Please enter 'Y' (yes) or 'N' (no).")
 
 
     def get_composition(self):
