@@ -10,6 +10,7 @@ class Peptide():
         self.name = name
         self.cysteine_treatment = utils.get_cysteine_treatment() if "C" in sequence else None
         self.methionine_oxidation = utils.get_methionine_oxidation() if "M" in sequence else None
+        self.isotope_labeling = self.get_isotope_labeling()
         self.composition = self.get_composition()
         self.mass = self.calculate_peptide_mass()
         
@@ -98,6 +99,15 @@ class Peptide():
 
         # Return mass rounded to nine decimals
         return round(peptide_mass, 9)
+    
+
+    def get_isotope_labeling(self):
+        '''
+        Ask user if the peptide contains amino acid residues labeled with C-13 and N-15.
+        If yes, return a list with amino acids that are labeled.
+        If no, return None.
+        '''
+        pass
     
 
     def write_block_file(self):
