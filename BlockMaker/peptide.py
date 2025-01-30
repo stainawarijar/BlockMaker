@@ -1,5 +1,4 @@
 import os
-
 from . import utils
 from .resources import amino_acids
 from .resources import constants
@@ -117,7 +116,7 @@ class Peptide():
             f"\n\tSulfurs = {self.composition['sulfurs']}"
         )
         utils.write_to_log(message)
-        print(f"\n{message}")
+        print(f"Writing sequence '{self.sequence}' info to block file '{self.name}.block'")
         
         # Create list with lines that should be written
         # "\t" is used to separate named and numbers by a tab
