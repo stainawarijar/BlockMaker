@@ -8,12 +8,80 @@ class Peptide():
     def __init__(self, sequence, name):
         self.sequence = sequence
         self.name = name
-        self.cysteine_treatment = utils.get_cysteine_treatment() if "C" in sequence else None
-        self.methionine_oxidation = utils.get_methionine_oxidation() if "M" in sequence else None
+        self.cysteine_treatment = self.get_cysteine_treatment()
+        self.methionine_oxidation = self.get_methionine_oxidation()
         self.isotope_labeling = self.get_isotope_labeling()
         self.composition = self.get_composition()
         self.mass = self.calculate_peptide_mass()
-        
+    
+    
+    def get_cysteine_treatment(self):
+        '''
+        Ask the user for treatment of cysteine residues.
+        Return a string: 'untreated', 'amide' or 'acid' if C is in the sequence.
+        Return None when C is not in the sequence.
+        '''
+        if not "C" in self.sequence:
+            return None
+        else:
+            treatments = ["untreated", "amide", "acid"]
+            while True:
+                choice = input(
+                    "\nSelect a treatment for your cysteine (C) residues:"
+                    "\n\t[1] None (reduced form)"
+                    "\n\t[2] Iodo- or chloroacetamide"
+                    "\n\t[3] Iodo- or chloroacetic acid"
+                    "\nEnter your choice: "
+                )
+                if not choice.strip() in ["1", "2", "3"]:
+                    print("\nInvalid input. Please enter '1', '2' or '3'")
+                else:
+                    # Print choice and write to log file
+                    if choice.strip() == "1":
+                        utils.write_to_log("Cysteine (C) residues untreated (reduced form).")
+                        print("\nCysteine residues untreated (reduced form).")
+                    elif choice.strip() == "2":
+                        utils.write_to_log("Cysteine (C) residues treated with iodo- or chloroacetamide.")
+                        print("\nCysteine residues treated with iodo- or chloroacetamide.")
+                    else:
+                        utils.write_to_log("Cysteine (C) residues treated with iodo- or chloroacetic acid.")
+                        print("\nCysteine residues treated with iodo- or chloroacetic acid.")
+                    # Return choice
+                    return treatments[int(choice) - 1]
+                
+    
+    
+    def get_methionine_oxidation(self):
+        '''
+        Ask user whether methionine residues should be treated as oxidized.
+        Return boolean: True (oxidized) or False (non-oxidized) if M is in the sequence.
+        Return None if M is not part of the sequence.
+        '''
+        if not "M" in self.sequence:
+            return None
+        else:
+            while True:
+                choice = input("\nShould methionine (M) residues be considered oxidized? [Y/N]: ").strip().upper()
+                if choice == "Y":
+                    utils.write_to_log("Methionine (M) residues considered oxidized.")
+                    print("\nMethionine residues considered oxidized.")
+                    return True
+                elif choice == "N":
+                    utils.write_to_log("Methionine (M) residues not considered oxidized.")
+                    print("\nMethionine residues not considered oxidized.")
+                    return False
+                else:
+                    print("Invalid input. Please enter 'Y' (yes) or 'N' (no).")
+
+
+    def get_isotope_labeling(self):
+        '''
+        Ask user if the peptide contains amino acid residues labeled with C-13 and N-15.
+        If yes, return a list with amino acids that are labeled.
+        If no, return None.
+        '''
+        pass
+
 
     def get_composition(self):
         '''
@@ -99,15 +167,6 @@ class Peptide():
 
         # Return mass rounded to nine decimals
         return round(peptide_mass, 9)
-    
-
-    def get_isotope_labeling(self):
-        '''
-        Ask user if the peptide contains amino acid residues labeled with C-13 and N-15.
-        If yes, return a list with amino acids that are labeled.
-        If no, return None.
-        '''
-        pass
     
 
     def write_block_file(self):
