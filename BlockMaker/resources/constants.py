@@ -7,6 +7,11 @@ NITROGEN_MASS = 14.003074004
 SULFUR_MASS = 31.972071174
 
 
+# Mass differences for some heavier stable isotopes (compared to monoisotopic mass)
+C13_MASS_DIFF = 13.003354835 - CARBON_MASS 
+N15_MASS_DIFF = 15.000108899 - NITROGEN_MASS 
+
+
 # H2O
 WATER_MASS = 2 * HYDROGEN_MASS + OXYGEN_MASS  
 
