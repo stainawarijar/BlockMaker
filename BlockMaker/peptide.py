@@ -26,28 +26,28 @@ class Peptide():
         else:
             treatments = ["untreated", "amide", "acid"]
             while True:
-                choice = input(
+                choice_treatment = input(
                     "\nSelect a treatment for your cysteine (C) residues:"
                     "\n\t[1] None (reduced form)"
                     "\n\t[2] Iodo- or chloroacetamide"
                     "\n\t[3] Iodo- or chloroacetic acid"
                     "\nEnter your choice: "
                 )
-                if not choice.strip() in ["1", "2", "3"]:
+                if not choice_treatment.strip() in ["1", "2", "3"]:
                     print("\nInvalid input. Please enter '1', '2' or '3'")
                 else:
                     # Print choice and write to log file
-                    if choice.strip() == "1":
+                    if choice_treatment.strip() == "1":
                         utils.write_to_log("Cysteine (C) residues untreated (reduced form).")
                         print("\nCysteine residues untreated (reduced form).")
-                    elif choice.strip() == "2":
+                    elif choice_treatment.strip() == "2":
                         utils.write_to_log("Cysteine (C) residues treated with iodo- or chloroacetamide.")
                         print("\nCysteine residues treated with iodo- or chloroacetamide.")
                     else:
                         utils.write_to_log("Cysteine (C) residues treated with iodo- or chloroacetic acid.")
                         print("\nCysteine residues treated with iodo- or chloroacetic acid.")
                     # Return choice
-                    return treatments[int(choice) - 1]
+                    return treatments[int(choice_treatment) - 1]
                 
     
     
@@ -61,12 +61,12 @@ class Peptide():
             return None
         else:
             while True:
-                choice = input("\nShould methionine (M) residues be considered oxidized? [Y/N]: ").strip().upper()
-                if choice == "Y":
+                choice_oxidation = input("\nShould methionine (M) residues be considered oxidized? [Y/N]: ").strip().upper()
+                if choice_oxidation == "Y":
                     utils.write_to_log("Methionine (M) residues considered oxidized.")
                     print("\nMethionine residues considered oxidized.")
                     return True
-                elif choice == "N":
+                elif choice_oxidation == "N":
                     utils.write_to_log("Methionine (M) residues not considered oxidized.")
                     print("\nMethionine residues not considered oxidized.")
                     return False
