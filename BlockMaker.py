@@ -12,10 +12,10 @@ def main():
 
         # Ask user if they want to create another block file or quit
         while True:
-            choice = input("\nDo you want to create another block file? [Y/N]: ").strip().upper()
-            if choice == "Y":
+            input_continue = input("\nDo you want to create another block file? [Y/N]: ").strip().upper()
+            if input_continue == "Y":
                 break  # Exit the inner while-loop
-            elif choice == "N":
+            elif input_continue == "N":
                 print("\nExiting the program...")
                 return  # Exit the main function
             else:

@@ -1,7 +1,5 @@
 import datetime
-
 from .resources import amino_acids
-
 
 
 def write_to_log(message):
@@ -10,9 +8,9 @@ def write_to_log(message):
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         if message.startswith("Start processing sequence"):
             # Add empty line before new sequence
-            file.write(f"\n\n{timestamp} \t - \t {message}")
+            file.write(f"\n\n{timestamp}\t{message}")
         else:
-            file.write(f"\n{timestamp} \t - \t {message}")
+            file.write(f"\n{timestamp}\t{message}")
         
 
 def get_input_sequence():
@@ -26,23 +24,27 @@ def get_input_sequence():
         invalid_positions = []    
         invalid_characters = [] 
         for i, char in enumerate(input_sequence):
-            if not char in amino_acids.compositions.keys():
+            if char not in amino_acids.compositions.keys():
                 invalid_positions.append(i + 1)  # Add index plus 1, so counting starts at 1
                 invalid_characters.append(char)
         # Check if there are invalid entries
         if len(invalid_positions) == 1:
-            print(f"\nCharacter '{invalid_characters[0]}' at position {invalid_positions[0]} "
-                  "does not correspond to any amino acid.")
+            print(
+                f"\nCharacter '{invalid_characters[0]}' at position {invalid_positions[0]} "
+                "does not correspond to any amino acid."
+            )
         elif len(invalid_positions) > 1:
             positions_join = ", ".join(map(str, invalid_positions[:-1])) + " and " + str(invalid_positions[-1])
             characters_join = (
                 ", ".join(f"'{item}'" for item in invalid_characters[:-1]) + 
                 " and '" + str(invalid_characters[-1]) + "'"
             )
-            print(f"\nCharacters {characters_join} at positions {positions_join} "
-                  "do not correspond to any amino acids.")
+            print(
+                f"\nCharacters {characters_join} at positions {positions_join} "
+                "do not correspond to any amino acids."
+            )
         else:
-            write_to_log(f"Start processing sequence '{input_sequence}'")
+            write_to_log(f"Start processing sequence '{input_sequence}'...")
             return input_sequence
     
 
@@ -58,54 +60,4 @@ def get_block_name():
             print("\nThe name of your block file can only contain letters.")
         else:
             return input_name
-
-
-def get_cysteine_treatment():
-    '''
-    Ask the user for treatment of cysteine residues.
-    Return a string: 'untreated', 'amide' or 'acid'.
-    '''
-    treatments = ["untreated", "amide", "acid"]
-    while True:
-        choice = input(
-            "\nSelect a treatment for your cysteine (C) residues:"
-            "\n\t[1] None (reduced form)"
-            "\n\t[2] Iodo- or chloroacetamide"
-            "\n\t[3] Iodo- or chloroacetic acid"
-            "\nEnter your choice: "
-        )
-        if not choice.strip() in ["1", "2", "3"]:
-            print("\nInvalid input. Please enter '1', '2' or '3'")
-        else:
-            # Print choice and write to log file
-            if choice.strip() == "1":
-                write_to_log("Cysteine (C) residues untreated (reduced form).")
-                print("\nCysteine residues untreated (reduced form).")
-            elif choice.strip() == "2":
-                write_to_log("Cysteine (C) residues treated with iodo- or chloroacetamide.")
-                print("\nCysteine residues treated with iodo- or chloroacetamide.")
-            else:
-                write_to_log("Cysteine (C) residues treated with iodo- or chloroacetic acid.")
-                print("\nCysteine residues treated with iodo- or chloroacetic acid.")
-            # Return choice
-            return treatments[int(choice) - 1]
-
-
-def get_methionine_oxidation():
-    '''
-    Ask user whether methionine residues should be treated as oxidized.
-    Return boolean: True (oxidized) or False (non-oxidized).
-    '''
-    while True:
-        choice = input("\nShould methionine (M) residues be considered oxidized? [Y/N]: ").strip().upper()
-        if choice == "Y":
-            write_to_log("Methionine (M) residues considered oxidized.")
-            print("\nMethionine residues considered oxidized.")
-            return True
-        elif choice == "N":
-            write_to_log("Methionine (M) residues not considered oxidized.")
-            print("\nMethionine residues not considered oxidized.")
-            return False
-        else:
-            print("Invalid input. Please enter 'Y' (yes) or 'N' (no).")
 
