@@ -81,10 +81,7 @@ class Peptide():
         If no, return None.
         '''
         while True:
-            input_labeling = input(
-                "\nDoes the peptide contain amino acid residues labeled with "
-                "stable isotopes C-13 and N-15? [Y/N]: "
-            ).strip().upper()
+            input_labeling = input("\nAre any amino acids labeled with stable isotopes C-13 and N-15? [Y/N]: ").strip().upper()
             if input_labeling == "N":
                 return None
             elif input_labeling == "Y":
@@ -99,7 +96,10 @@ class Peptide():
                     else:
                         invalid_entries = False
                         for aa in labeled_amino_acids:
-                            if aa not in self.sequence:
+                            if aa not in amino_acids.compositions.keys():
+                                invalid_entries = True
+                                print(f"\n{aa} is not an existing amino acid!")
+                            elif aa not in self.sequence:
                                 invalid_entries = True
                                 print(f"\n{aa} is not present in the peptide sequence!")
                         if invalid_entries:
