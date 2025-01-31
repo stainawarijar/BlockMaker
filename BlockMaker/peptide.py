@@ -57,7 +57,7 @@ class Peptide():
         Return boolean: True (oxidized) or False (non-oxidized) if M is in the sequence.
         Return None if M is not part of the sequence.
         '''
-        if not "M" in self.sequence:
+        if "M" not in self.sequence:
             return None
         else:
             while True:
@@ -90,7 +90,7 @@ class Peptide():
             elif input_labeling == "Y":
                 while True:
                     # Let user specify labeled amino acids
-                    input_amino_acids = input("\nEnter all labeled amino acids (separated by commas or spaces): ")
+                    input_amino_acids = input("\nSpecify labeled amino acids (separated by commas or spaces): ")
                     # Remove all spaces, commas and duplicate entries
                     labeled_amino_acids = ''.join(set(input_amino_acids.replace(",", "").replace(" ", ""))).upper()
                     # Check input for validity
@@ -99,7 +99,7 @@ class Peptide():
                     else:
                         invalid_entries = False
                         for aa in labeled_amino_acids:
-                            if not aa in self.sequence:
+                            if aa not in self.sequence:
                                 invalid_entries = True
                                 print(f"\n{aa} is not present in the peptide sequence!")
                         if invalid_entries:
@@ -117,7 +117,7 @@ class Peptide():
     def get_composition(self):
         '''
         Determine elemental composition based on peptide sequence.
-        Include cysteine treatment and methionine oxidation when applicable.
+        Include cysteine treatment, methionine oxidation and C-13/N-15 labeling when applicable.
         Return a dictionary with number of carbon, hydrogen, nitrogen, oxygen and sulfur atoms.
         '''
         # Initialize dictionary with elements.
@@ -163,6 +163,15 @@ class Peptide():
             if self.methionine_oxidation:
                 # Add oxygen atom for each methionine
                 peptide_composition["oxygens"] += self.sequence.count("M")
+
+        # Check isotope labeling
+        if self.isotope_labeling is not None:
+            # Loop over the labeled amino acids
+            # C and N in these amino acids are always C-13 and N-15 (no variation)
+            # Must be removed from the composition written to the block file 
+            for aa in self.isotope_labeling:
+                peptide_composition["carbons"] -= amino_acids.compositions[aa]["carbons"] * self.sequence.count(aa)
+                peptide_composition["nitrogens"] -= amino_acids.compositions[aa]["nitrogens"] * self.sequence.count(aa)
                 
         return peptide_composition
         
@@ -170,7 +179,7 @@ class Peptide():
     def calculate_peptide_mass(self):
         '''
         Calculate the monoisotopic mass of the peptide based on its sequence.
-        Include cysteine treatment and methionine oxidation when applicable.
+        Include cysteine treatment, methionine oxidation and C-13/N-15 labeling when applicable.
         Return the mass in amu rounded to five decimals.
         '''
         # Initiate mass at 0
@@ -196,6 +205,13 @@ class Peptide():
                 # Add oxygen mass for each methionine residue
                 peptide_mass += constants.OXYGEN_MASS * self.sequence.count("M")
 
+        # Check isotope labeling
+        if self.isotope_labeling is not None:
+            # Loop over the labeled amino acids and increase mass
+            for aa in self.isotope_labeling:
+                peptide_mass += constants.C13_MASS_DIFF * amino_acids.compositions[aa]["carbons"] * self.sequence.count(aa)
+                peptide_mass += constants.N15_MASS_DIFF * amino_acids.compositions[aa]["nitrogens"] * self.sequence.count(aa)
+
         # Return mass rounded to nine decimals
         return round(peptide_mass, 9)
     
@@ -216,7 +232,7 @@ class Peptide():
             f"\n\tSulfurs = {self.composition['sulfurs']}"
         )
         utils.write_to_log(message)
-        print(f"Writing sequence '{self.sequence}' info to block file '{self.name}.block'")
+        print(f"\nWriting sequence '{self.sequence}' info to block file '{self.name}.block'")
         
         # Create list with lines that should be written
         # "\t" is used to separate named and numbers by a tab
