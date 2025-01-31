@@ -21,7 +21,7 @@ class Peptide():
         Return a string: 'untreated', 'amide' or 'acid' if C is in the sequence.
         Return None when C is not in the sequence.
         '''
-        if not "C" in self.sequence:
+        if "C" not in self.sequence:
             return None
         else:
             treatments = ["untreated", "amide", "acid"]
@@ -33,7 +33,7 @@ class Peptide():
                     "\n\t[3] Iodo- or chloroacetic acid"
                     "\nEnter your choice: "
                 )
-                if not input_treatment.strip() in ["1", "2", "3"]:
+                if input_treatment.strip() not in ["1", "2", "3"]:
                     print("\nInvalid input. Please enter '1', '2' or '3'")
                 else:
                     # Print choice and write to log file

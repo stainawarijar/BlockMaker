@@ -24,7 +24,7 @@ def get_input_sequence():
         invalid_positions = []    
         invalid_characters = [] 
         for i, char in enumerate(input_sequence):
-            if not char in amino_acids.compositions.keys():
+            if char not in amino_acids.compositions.keys():
                 invalid_positions.append(i + 1)  # Add index plus 1, so counting starts at 1
                 invalid_characters.append(char)
         # Check if there are invalid entries
