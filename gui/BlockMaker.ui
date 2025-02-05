@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>528</width>
+    <width>551</width>
     <height>407</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">* {
-    font-family: 'Arial';
+    font-family: 'DejaVu Sans';
     font-size: 10pt; 
 }
 </string>
@@ -32,7 +32,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
+      <family>DejaVu Sans</family>
       <pointsize>8</pointsize>
      </font>
     </property>
@@ -51,7 +51,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
+      <family>DejaVu Sans</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -70,7 +70,7 @@
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
+      <family>DejaVu Sans</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -92,13 +92,13 @@
     </property>
     <property name="font">
      <font>
-      <family>Arial black</family>
+      <family>DejaVu Sans</family>
       <pointsize>10</pointsize>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-family: 'Arial black';
-font-size: 10pt;</string>
+     <string notr="true"/>
     </property>
     <property name="text">
      <string>Sequences</string>
@@ -109,13 +109,13 @@ font-size: 10pt;</string>
      <rect>
       <x>270</x>
       <y>20</y>
-      <width>241</width>
+      <width>261</width>
       <height>261</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
+      <family>DejaVu Sans</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -141,7 +141,7 @@ font-size: 10pt;</string>
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
+       <family>DejaVu Sans</family>
        <pointsize>9</pointsize>
       </font>
      </property>
@@ -175,7 +175,7 @@ font-size: 10pt;</string>
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
+       <family>DejaVu Sans</family>
        <pointsize>10</pointsize>
       </font>
      </property>
@@ -188,7 +188,7 @@ font-size: 10pt;</string>
       <rect>
        <x>10</x>
        <y>140</y>
-       <width>221</width>
+       <width>241</width>
        <height>111</height>
       </rect>
      </property>
@@ -202,7 +202,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_R">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -215,7 +215,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_A">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -228,7 +228,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_F">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -241,7 +241,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_E">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -254,7 +254,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_I">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -267,7 +267,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_N">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -280,7 +280,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_D">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -293,7 +293,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_W">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -306,7 +306,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_C">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -319,7 +319,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_Q">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -332,7 +332,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_G">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -345,7 +345,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_H">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -358,7 +358,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_L">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -371,7 +371,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_K">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -384,7 +384,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_M">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -397,7 +397,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_P">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -410,7 +410,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_S">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -423,7 +423,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_T">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -436,7 +436,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_Y">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -449,7 +449,7 @@ font-size: 10pt;</string>
        <widget class="QCheckBox" name="checkBox_V">
         <property name="font">
          <font>
-          <family>Arial</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -471,7 +471,7 @@ font-size: 10pt;</string>
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
+       <family>DejaVu Sans</family>
        <pointsize>10</pointsize>
       </font>
      </property>
@@ -484,13 +484,13 @@ font-size: 10pt;</string>
       <rect>
        <x>10</x>
        <y>120</y>
-       <width>221</width>
+       <width>241</width>
        <height>16</height>
       </rect>
      </property>
      <property name="font">
       <font>
-       <family>Arial</family>
+       <family>DejaVu Sans</family>
        <pointsize>10</pointsize>
       </font>
      </property>
@@ -504,7 +504,7 @@ font-size: 10pt;</string>
     <widget class="QLabel" name="label6_2">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>40</x>
        <y>10</y>
        <width>191</width>
        <height>21</height>
@@ -512,13 +512,13 @@ font-size: 10pt;</string>
      </property>
      <property name="font">
       <font>
-       <family>Arial black</family>
+       <family>DejaVu Sans</family>
        <pointsize>10</pointsize>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">font-family: 'Arial black';
-font-size: 10pt;</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Amino acid modifications</string>
@@ -568,7 +568,7 @@ font-size: 10pt;</string>
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
+      <family>DejaVu Sans</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -600,7 +600,7 @@ font-size: 10pt;</string>
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
+      <family>DejaVu Sans</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -616,13 +616,13 @@ font-size: 10pt;</string>
      <rect>
       <x>20</x>
       <y>20</y>
-      <width>201</width>
+      <width>221</width>
       <height>16</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
+      <family>DejaVu Sans</family>
       <pointsize>10</pointsize>
      </font>
     </property>
@@ -641,7 +641,7 @@ font-size: 10pt;</string>
     </property>
     <property name="font">
      <font>
-      <family>Arial</family>
+      <family>DejaVu Sans</family>
       <pointsize>8</pointsize>
      </font>
     </property>
@@ -673,13 +673,12 @@ font-size: 10pt;</string>
     </property>
     <property name="font">
      <font>
-      <family>Arial black</family>
+      <family>DejaVu Sans</family>
       <pointsize>12</pointsize>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-family: 'Arial black';
-font-size: 12pt;</string>
+     <string notr="true">font-size: 12pt;</string>
     </property>
     <property name="text">
      <string>Generate block files</string>
