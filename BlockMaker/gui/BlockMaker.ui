@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>551</width>
-    <height>407</height>
+    <height>436</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -25,7 +25,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>100</y>
+      <y>120</y>
       <width>191</width>
       <height>21</height>
      </rect>
@@ -44,7 +44,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>80</y>
+      <y>100</y>
       <width>221</width>
       <height>16</height>
      </rect>
@@ -63,7 +63,7 @@
     <property name="geometry">
      <rect>
       <x>220</x>
-      <y>100</y>
+      <y>120</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -85,7 +85,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>140</y>
+      <y>160</y>
       <width>81</width>
       <height>21</height>
      </rect>
@@ -531,32 +531,19 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>170</y>
+      <y>190</y>
       <width>221</width>
-      <height>211</height>
+      <height>221</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-size: 8pt;</string>
+     <string notr="true">font-size: 10pt;</string>
     </property>
     <property name="editTriggers">
      <set>QAbstractItemView::DoubleClicked</set>
     </property>
     <property name="alternatingRowColors">
      <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_outputdir">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>310</y>
-      <width>211</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-size: 8pt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="label6">
@@ -595,7 +582,7 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>140</y>
+      <y>160</y>
       <width>121</width>
       <height>21</height>
      </rect>
@@ -632,32 +619,13 @@
      <string>Text file with peptide sequences:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_filelocation">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>191</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>DejaVu Sans</family>
-      <pointsize>8</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font-size: 8pt;</string>
-    </property>
-   </widget>
    <widget class="QToolButton" name="toolButton_openfile">
     <property name="geometry">
      <rect>
       <x>220</x>
       <y>40</y>
-      <width>23</width>
-      <height>20</height>
+      <width>21</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -668,7 +636,7 @@
     <property name="geometry">
      <rect>
       <x>270</x>
-      <y>340</y>
+      <y>370</y>
       <width>211</width>
       <height>41</height>
      </rect>
@@ -677,13 +645,59 @@
      <font>
       <family>DejaVu Sans</family>
       <pointsize>12</pointsize>
+      <italic>true</italic>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-size: 12pt;</string>
+     <string notr="true">font-style: italic;
+font-size: 12pt;</string>
     </property>
     <property name="text">
      <string>Generate block files</string>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget_filelocation">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>40</y>
+      <width>191</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font-size: 9pt;</string>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::DoubleClicked</set>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget_outputdir">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>310</y>
+      <width>211</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font-size: 9pt;</string>
+    </property>
+    <property name="horizontalScrollBarPolicy">
+     <enum>Qt::ScrollBarAlwaysOn</enum>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::DoubleClicked</set>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
