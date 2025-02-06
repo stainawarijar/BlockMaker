@@ -45,7 +45,7 @@
      <rect>
       <x>20</x>
       <y>80</y>
-      <width>211</width>
+      <width>221</width>
       <height>16</height>
      </rect>
     </property>
@@ -59,7 +59,7 @@
      <string>Add peptide sequence manually:</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_sequence">
+   <widget class="QPushButton" name="pushButton_addsequence">
     <property name="geometry">
      <rect>
       <x>220</x>
@@ -86,7 +86,7 @@
      <rect>
       <x>30</x>
       <y>140</y>
-      <width>91</width>
+      <width>81</width>
       <height>21</height>
      </rect>
     </property>
@@ -94,11 +94,12 @@
      <font>
       <family>DejaVu Sans</family>
       <pointsize>10</pointsize>
+      <weight>75</weight>
       <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true"/>
+     <string notr="true">font-weight: bold;</string>
     </property>
     <property name="text">
      <string>Sequences</string>
@@ -514,11 +515,12 @@
       <font>
        <family>DejaVu Sans</family>
        <pointsize>10</pointsize>
+       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">font-weight: bold;</string>
      </property>
      <property name="text">
       <string>Amino acid modifications</string>
@@ -576,7 +578,7 @@
      <string>Output directory:</string>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton_output">
+   <widget class="QToolButton" name="toolButton_openoutputdir">
     <property name="geometry">
      <rect>
       <x>490</x>
@@ -589,7 +591,7 @@
      <string>...</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_delete">
+   <widget class="QPushButton" name="pushButton_deletesequence">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -630,7 +632,7 @@
      <string>Text file with peptide sequences:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_file">
+   <widget class="QLineEdit" name="lineEdit_filelocation">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -649,7 +651,7 @@
      <string notr="true">font-size: 8pt;</string>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolButton_file">
+   <widget class="QToolButton" name="toolButton_openfile">
     <property name="geometry">
      <rect>
       <x>220</x>
