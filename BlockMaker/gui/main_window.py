@@ -62,7 +62,7 @@ class MainWindow(QMainWindow):
                         )
                     else:
                         # Add to sequence list
-                        self.ui.listWidget_sequences.addItem(line)
+                        self.ui.listWidget_sequences.addItem(sequence)
 
 
     def add_sequence(self):
