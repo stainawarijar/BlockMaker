@@ -48,6 +48,9 @@ class MainWindow(QMainWindow):
                 for line in file:
                     # Remove leading or trailing spaces, and capitalize letters
                     sequence = line.strip().upper()
+                    # Skip empty lines
+                    if sequence == "":
+                        continue
                     # Check validity of the sequence
                     invalid = utils.check_sequence_validity(sequence)
                     if len(invalid["positions"]) > 0:
