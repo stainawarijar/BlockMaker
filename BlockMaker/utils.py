@@ -11,7 +11,50 @@ def write_to_log(message):
             file.write(f"\n\n{timestamp}\t{message}")
         else:
             file.write(f"\n{timestamp}\t{message}")
-        
+
+
+def check_sequence_validity(sequence_input):
+    '''
+    Check the validity of an input peptide sequence.
+    Returns a dictionary with two lists: invalid characters and their positions
+    '''
+    invalid = {"positions": [], "characters": []}
+    # Loop over each character in the input sequence and look for invalid entries
+    for i, char in enumerate(sequence_input):
+        if char not in amino_acids.compositions.keys():
+            invalid["positions"].append(i + 1)  # Add index plus 1, so counting starts at 1
+            invalid["characters"].append(char)
+    # Return the dictionary
+    return invalid
+
+
+def generate_invalid_sequence_warning(invalid, sequence):
+    '''
+    Generates a warning message based on invalid positions and characters
+    in a peptide input sequence.
+    '''
+    if len(invalid["positions"]) == 1:
+        warning_msg = (
+            f"\nCharacter '{invalid["characters"][0]}' at position {invalid["positions"][0]} "
+            f"in sequence '{sequence}' does not correspond to any amino acid."
+        )
+    else:
+        positions_join = ", ".join(map(str, invalid["positions"][:-1])) + " and " + str(invalid["positions"][-1])
+        characters_join = (
+            ", ".join(f"'{char}'" for char in invalid["characters"][:-1]) + 
+            " and '" + str(invalid["characters"][-1]) + "'"
+        )
+        warning_msg = (
+            f"\nCharacters '{characters_join}' at positions {positions_join} "
+            f"in sequence '{sequence}' do not correspond to any amino acids."
+        )
+    return warning_msg
+
+
+
+
+
+
 
 def get_input_sequence():
     '''
