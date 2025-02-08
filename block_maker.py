@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QStyleFactory
-from BlockMaker.gui.main_window import MainWindow
+from block_maker.gui.main_window import MainWindow
 
 
 def main():

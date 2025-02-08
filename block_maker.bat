@@ -11,7 +11,7 @@ call venv\Scripts\activate
 pip install -r requirements.txt
 
 @echo Running BlockMaker
-python BlockMaker.py
+python block_maker.py
 
 REM Pause to keep the window open
 pause
