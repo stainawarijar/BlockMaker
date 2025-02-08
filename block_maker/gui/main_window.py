@@ -1,4 +1,5 @@
-from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox
+from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QListWidgetItem
+from PyQt6.QtCore import Qt
 from .gui import Ui_MainWindow
 from .. import utils
 from ..peptide import Peptide
@@ -65,7 +66,9 @@ class MainWindow(QMainWindow):
                         )
                     else:
                         # Add to sequence list
-                        self.ui.listWidget_sequences.addItem(sequence)
+                        item = QListWidgetItem(sequence)
+                        item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable)  # Makes it editable
+                        self.ui.listWidget_sequences.addItem(item)
 
 
     def add_sequence(self):
