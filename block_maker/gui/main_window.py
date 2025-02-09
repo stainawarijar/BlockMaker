@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QListWidgetItem
+from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem
 from PyQt6.QtCore import Qt
 from .gui import Ui_MainWindow
 from .. import utils
@@ -15,6 +15,7 @@ class MainWindow(QMainWindow):
         self.ui.toolButton_openfile.clicked.connect(self.open_text_file)
         self.ui.pushButton_addsequence.clicked.connect(self.add_sequence)
         self.ui.pushButton_deletesequence.clicked.connect(self.delete_sequence)
+        self.ui.pushButton_deleteall.clicked.connect(self.delete_all)
         self.ui.toolButton_openoutputdir.clicked.connect(self.open_output_dir)
         self.ui.pushButton_generateblocks.clicked.connect(self.generate_blocks)
 
@@ -42,8 +43,6 @@ class MainWindow(QMainWindow):
         self.ui.listWidget_filelocation.clear()
         self.ui.listWidget_filelocation.addItem(file_path)
         if file_path:
-            # Clear previous sequence list
-            self.ui.listWidget_sequences.clear()
             # Read sequences from file
             with open(file_path, "r") as file:
                 for line in file:
@@ -65,19 +64,21 @@ class MainWindow(QMainWindow):
                             )
                         )
                     else:
-                        # Add to sequence list
-                        item = QListWidgetItem(sequence)
-                        item.setFlags(item.flags() | Qt.ItemFlag.ItemIsEditable)  # Makes it editable
-                        self.ui.listWidget_sequences.addItem(item)
+                        # Add to sequence table
+                        row_position = self.ui.tableWidget_sequences.rowCount()
+                        self.ui.tableWidget_sequences.insertRow(row_position)
+                        self.ui.tableWidget_sequences.setItem(row_position, 0, QTableWidgetItem(sequence))
 
 
     def add_sequence(self):
         print("Add a sequence.")
-
+        
 
     def delete_sequence(self):
-        print("Delete selected sequence")
+        print("Delete selected sequence.")
 
+    def delete_all(self):
+        print("Delete all sequences.")
 
     def open_output_dir(self):
         print("Select an output directory.")

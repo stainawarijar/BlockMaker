@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>551</width>
-    <height>436</height>
+    <width>567</width>
+    <height>596</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,9 +24,9 @@
    <widget class="QLineEdit" name="lineEdit_sequence">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>120</y>
-      <width>191</width>
+      <x>30</x>
+      <y>220</y>
+      <width>201</width>
       <height>21</height>
      </rect>
     </property>
@@ -43,8 +43,8 @@
    <widget class="QLabel" name="label2">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>100</y>
+      <x>30</x>
+      <y>200</y>
       <width>221</width>
       <height>16</height>
      </rect>
@@ -62,8 +62,8 @@
    <widget class="QPushButton" name="pushButton_addsequence">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>120</y>
+      <x>240</x>
+      <y>220</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -77,14 +77,11 @@
     <property name="text">
      <string>+</string>
     </property>
-    <property name="shortcut">
-     <string>Return</string>
-    </property>
    </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>270</x>
+      <x>280</x>
       <y>20</y>
       <width>261</width>
       <height>261</height>
@@ -505,9 +502,9 @@
    <widget class="QLabel" name="label6">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>290</y>
-      <width>131</width>
+      <x>30</x>
+      <y>30</y>
+      <width>211</width>
       <height>16</height>
      </rect>
     </property>
@@ -518,14 +515,14 @@
      </font>
     </property>
     <property name="text">
-     <string>Output directory:</string>
+     <string>Block files output directory:</string>
     </property>
    </widget>
    <widget class="QToolButton" name="toolButton_openoutputdir">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>310</y>
+      <x>240</x>
+      <y>50</y>
       <width>23</width>
       <height>20</height>
      </rect>
@@ -537,8 +534,8 @@
    <widget class="QPushButton" name="pushButton_deletesequence">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>390</y>
+      <x>30</x>
+      <y>260</y>
       <width>121</width>
       <height>21</height>
      </rect>
@@ -557,15 +554,12 @@ background-color: darkblue;</string>
     <property name="text">
      <string>Delete selected</string>
     </property>
-    <property name="shortcut">
-     <string>Del</string>
-    </property>
    </widget>
    <widget class="QLabel" name="label1">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
+      <x>30</x>
+      <y>120</y>
       <width>221</width>
       <height>16</height>
      </rect>
@@ -577,14 +571,14 @@ background-color: darkblue;</string>
      </font>
     </property>
     <property name="text">
-     <string>Text file with peptide sequences:</string>
+     <string>Import text file with sequences:</string>
     </property>
    </widget>
    <widget class="QToolButton" name="toolButton_openfile">
     <property name="geometry">
      <rect>
-      <x>220</x>
-      <y>40</y>
+      <x>240</x>
+      <y>140</y>
       <width>21</width>
       <height>21</height>
      </rect>
@@ -596,8 +590,8 @@ background-color: darkblue;</string>
    <widget class="QPushButton" name="pushButton_generateblocks">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>370</y>
+      <x>180</x>
+      <y>530</y>
       <width>211</width>
       <height>41</height>
      </rect>
@@ -607,10 +601,12 @@ background-color: darkblue;</string>
       <family>DejaVu Sans</family>
       <pointsize>12</pointsize>
       <italic>true</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-style: italic;
+     <string notr="true">font-weight: bold;
+font-style: italic;
 font-size: 12pt;
 background-color: darkgreen;</string>
     </property>
@@ -621,9 +617,9 @@ background-color: darkgreen;</string>
    <widget class="QListWidget" name="listWidget_filelocation">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>191</width>
+      <x>30</x>
+      <y>140</y>
+      <width>201</width>
       <height>41</height>
      </rect>
     </property>
@@ -643,9 +639,9 @@ background-color: darkgreen;</string>
    <widget class="QListWidget" name="listWidget_outputdir">
     <property name="geometry">
      <rect>
-      <x>270</x>
-      <y>310</y>
-      <width>211</width>
+      <x>30</x>
+      <y>50</y>
+      <width>201</width>
       <height>41</height>
      </rect>
     </property>
@@ -665,9 +661,9 @@ background-color: darkgreen;</string>
    <widget class="QTableWidget" name="tableWidget_sequences">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>160</y>
-      <width>221</width>
+      <x>30</x>
+      <y>300</y>
+      <width>511</width>
       <height>221</height>
      </rect>
     </property>
@@ -675,7 +671,10 @@ background-color: darkgreen;</string>
      <bool>false</bool>
     </attribute>
     <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>110</number>
+     <number>100</number>
+    </attribute>
+    <attribute name="verticalHeaderCascadingSectionResizes">
+     <bool>true</bool>
     </attribute>
     <column>
      <property name="text">
@@ -691,9 +690,9 @@ background-color: darkgreen;</string>
    <widget class="QPushButton" name="pushButton_deleteall">
     <property name="geometry">
      <rect>
-      <x>150</x>
-      <y>390</y>
-      <width>91</width>
+      <x>160</x>
+      <y>260</y>
+      <width>101</width>
       <height>21</height>
      </rect>
     </property>
