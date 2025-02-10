@@ -1,4 +1,5 @@
 import datetime
+from .resources import amino_acids
 
 
 def write_to_log(message):
