@@ -5,11 +5,11 @@ from .resources import constants
 
 
 class Peptide():
-    def __init__(self, block_name, sequence, cysteine_treatment):
+    def __init__(self, block_name, sequence, cysteine_treatment, methionine_oxidation):
         self.block_name = block_name
         self.sequence = sequence
         self.cysteine_treatment = cysteine_treatment
-        # self.methionine_oxidation = 
+        self.methionine_oxidation = methionine_oxidation
         # self.isotope_labeling = 
         self.composition = self.get_composition()
         self.mass = self.calculate_peptide_mass()
@@ -59,11 +59,10 @@ class Peptide():
                 peptide_composition["hydrogens"] += 2 * self.sequence.count("C")  # Difference of 2 H
                 peptide_composition["oxygens"] += 2 * self.sequence.count("C")
 
-        # # Check methionine oxidation
-        # if self.methionine_oxidation is not None:
-        #     if self.methionine_oxidation:
-        #         # Add oxygen atom for each methionine
-        #         peptide_composition["oxygens"] += self.sequence.count("M")
+        # Check methionine oxidation
+        if "M" in self.sequence and self.methionine_oxidation:
+            # Add oxygen atom for each methionine residue
+            peptide_composition["oxygens"] += self.sequence.count("M")
 
         # # Check isotope labeling
         # if self.isotope_labeling is not None:
@@ -100,11 +99,10 @@ class Peptide():
             elif self.cysteine_treatment == "Iodo- or chloroacetic acid":
                 peptide_mass += (constants.ACETIC_ACID_GROUP_MASS - constants.HYDROGEN_MASS) * self.sequence.count("C")
 
-        # # Check methionine oxidation
-        # if self.methionine_oxidation is not None:
-        #     if self.methionine_oxidation:
-        #         # Add oxygen mass for each methionine residue
-        #         peptide_mass += constants.OXYGEN_MASS * self.sequence.count("M")
+        # Check methionine oxidation
+        if "M" in self.sequence and self.methionine_oxidation:
+            # Add oxygen mass for each methionine residue
+            peptide_mass += constants.OXYGEN_MASS * self.sequence.count("M")
 
         # # Check isotope labeling
         # if self.isotope_labeling is not None:

@@ -206,7 +206,8 @@ class MainWindow(QMainWindow):
             # Create instance of Peptide class
             peptide = Peptide(
                 block_name, sequence,
-                cysteine_treatment = self.ui.comboBox_C_treatment.currentText()
+                cysteine_treatment = self.ui.comboBox_C_treatment.currentText(),
+                methionine_oxidation = self.ui.radioButton_M_oxidation.isChecked()  # Boolean
             )
             # Write message to log file
             utils.write_to_log(f"Start processing block '{block_name}' with sequence '{sequence}'...")
@@ -217,7 +218,8 @@ class MainWindow(QMainWindow):
                     utils.write_to_log("Cysteines treated with iodo- or chloroacetic acid.")
                 else:
                     utils.write_to_log("Cysteines untreated (reduced form).")
-                
+            if "M" in peptide.sequence and peptide.methionine_oxidation:
+                utils.write_to_log("Methionines oxidized.")
             # Create block file
             peptide.write_block_file(output_dir = self.ui.listWidget_outputdir.item(0).text())
 
