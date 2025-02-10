@@ -35,3 +35,5 @@ By clicking the corresponding buttons, you can delete either a selection of entr
 
 The **"Generate block files"** will create block files based on the sequences and modifications specified in the table. 
 Ensure all desired modifications and sequences are correctly entered before clicking this button.
+
+After creating the block files, you can check the generated log file ("BlockMaker.log") to confirm that you made the correct choices.
