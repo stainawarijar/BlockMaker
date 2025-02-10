@@ -1,1 +1,1 @@
-# Empty for now
+PyQt6 == 6.8.0
