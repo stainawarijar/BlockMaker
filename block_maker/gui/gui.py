@@ -379,7 +379,7 @@ class Ui_MainWindow(object):
         self.pushButton_addsequence.setText(_translate("MainWindow", "+"))
         self.comboBox_C_treatment.setItemText(0, _translate("MainWindow", "None (reduced form)"))
         self.comboBox_C_treatment.setItemText(1, _translate("MainWindow", "Iodo- or chloroacetamide"))
-        self.comboBox_C_treatment.setItemText(2, _translate("MainWindow", "Iodo- or chloroacetamide"))
+        self.comboBox_C_treatment.setItemText(2, _translate("MainWindow", "Iodo- or chloroacetic acid"))
         self.label4.setText(_translate("MainWindow", "Cysteine treatment:"))
         self.checkBox_R.setText(_translate("MainWindow", "R"))
         self.checkBox_A.setText(_translate("MainWindow", "A"))
