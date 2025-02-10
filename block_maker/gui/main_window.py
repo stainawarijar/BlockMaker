@@ -45,8 +45,7 @@ class MainWindow(QMainWindow):
         if file_path:
             # If a text file was loaded previously, clear existing entries
             if self.ui.listWidget_filelocation.count() > 0:
-                self.ui.tableWidget_sequences.setRowCount(0)
-                self.ui.listWidget_filelocation.clear()
+                self.delete_all()
             # Add file location
             self.ui.listWidget_filelocation.addItem(file_path)
             # Read sequences from file
@@ -144,7 +143,9 @@ class MainWindow(QMainWindow):
 
 
     def delete_all(self):
-        print("Delete all sequences.")
+        '''Remove all block names and corresponding sequences from the sequence table.'''
+        self.ui.tableWidget_sequences.setRowCount(0)
+        self.ui.listWidget_filelocation.clear()
 
 
     def open_output_dir(self):
