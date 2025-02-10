@@ -161,7 +161,10 @@ class MainWindow(QMainWindow):
 
 
     def delete_sequence(self):
-        print("Delete selected sequence.")
+        '''Delete selected rows in the sequence table.'''
+        selected_rows = set(index.row() for index in self.ui.tableWidget_sequences.selectedIndexes())
+        for row in sorted(selected_rows, reverse = True):
+            self.ui.tableWidget_sequences.removeRow(row)
 
 
     def delete_all(self):
