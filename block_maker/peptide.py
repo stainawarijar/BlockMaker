@@ -5,113 +5,14 @@ from .resources import constants
 
 
 class Peptide():
-    def __init__(self, sequence, name):
+    def __init__(self, block_name, sequence, cysteine_treatment):
+        self.block_name = block_name
         self.sequence = sequence
-        self.name = name
-        self.cysteine_treatment = self.get_cysteine_treatment()
-        self.methionine_oxidation = self.get_methionine_oxidation()
-        self.isotope_labeling = self.get_isotope_labeling()
+        self.cysteine_treatment = cysteine_treatment
+        # self.methionine_oxidation = 
+        # self.isotope_labeling = 
         self.composition = self.get_composition()
         self.mass = self.calculate_peptide_mass()
-    
-    
-    def get_cysteine_treatment(self):
-        '''
-        Ask the user for treatment of cysteine residues.
-        Return a string: 'untreated', 'amide' or 'acid' if C is in the sequence.
-        Return None when C is not in the sequence.
-        '''
-        if "C" not in self.sequence:
-            return None
-        else:
-            treatments = ["untreated", "amide", "acid"]
-            while True:
-                input_treatment = input(
-                    "\nSelect a treatment for your cysteine (C) residues:"
-                    "\n\t[1] None (reduced form)"
-                    "\n\t[2] Iodo- or chloroacetamide"
-                    "\n\t[3] Iodo- or chloroacetic acid"
-                    "\nEnter your choice: "
-                )
-                if input_treatment.strip() not in ["1", "2", "3"]:
-                    print("\nInvalid input. Please enter '1', '2' or '3'")
-                else:
-                    # Print choice and write to log file
-                    if input_treatment.strip() == "1":
-                        utils.write_to_log("Cysteine (C) residues untreated (reduced form).")
-                        print("\nCysteine residues untreated (reduced form).")
-                    elif input_treatment.strip() == "2":
-                        utils.write_to_log("Cysteine (C) residues treated with iodo- or chloroacetamide.")
-                        print("\nCysteine residues treated with iodo- or chloroacetamide.")
-                    else:
-                        utils.write_to_log("Cysteine (C) residues treated with iodo- or chloroacetic acid.")
-                        print("\nCysteine residues treated with iodo- or chloroacetic acid.")
-                    # Return choice
-                    return treatments[int(input_treatment) - 1]
-                
-    
-    
-    def get_methionine_oxidation(self):
-        '''
-        Ask user whether methionine residues should be treated as oxidized.
-        Return boolean: True (oxidized) or False (non-oxidized) if M is in the sequence.
-        Return None if M is not part of the sequence.
-        '''
-        if "M" not in self.sequence:
-            return None
-        else:
-            while True:
-                input_oxidation = input("\nShould methionine (M) residues be considered oxidized? [Y/N]: ").strip().upper()
-                if input_oxidation == "Y":
-                    utils.write_to_log("Methionine (M) residues considered oxidized.")
-                    print("\nMethionine residues considered oxidized.")
-                    return True
-                elif input_oxidation == "N":
-                    utils.write_to_log("Methionine (M) residues not considered oxidized.")
-                    print("\nMethionine residues not considered oxidized.")
-                    return False
-                else:
-                    print("\nInvalid input. Please enter 'Y' (yes) or 'N' (no).")
-
-
-    def get_isotope_labeling(self):
-        '''
-        Ask user if the peptide contains amino acid residues labeled with C-13 and N-15.
-        If yes, return a list with amino acids that are labeled.
-        If no, return None.
-        '''
-        while True:
-            input_labeling = input("\nAre any amino acids labeled with stable isotopes C-13 and N-15? [Y/N]: ").strip().upper()
-            if input_labeling == "N":
-                return None
-            elif input_labeling == "Y":
-                while True:
-                    # Let user specify labeled amino acids
-                    input_amino_acids = input("\nSpecify labeled amino acids (separated by commas or spaces): ")
-                    # Remove all spaces, commas and duplicate entries
-                    labeled_amino_acids = ''.join(set(input_amino_acids.replace(",", "").replace(" ", ""))).upper()
-                    # Check input for validity
-                    if not labeled_amino_acids.isalpha():
-                        print("\nInvalid input. Enter letters separated by commas or spaces.")
-                    else:
-                        invalid_entries = False
-                        for aa in labeled_amino_acids:
-                            if aa not in amino_acids.compositions.keys():
-                                invalid_entries = True
-                                print(f"\n{aa} is not an existing amino acid!")
-                            elif aa not in self.sequence:
-                                invalid_entries = True
-                                print(f"\n{aa} is not present in the peptide sequence!")
-                        if invalid_entries:
-                            continue
-                        else:
-                            # Print message and write to log
-                            utils.write_to_log(f"{', '.join(labeled_amino_acids)} labeled with C-13 and N-15.")
-                            print(f"\n{', '.join(labeled_amino_acids)} labeled with C-13 and N-15.")
-                            # Return labeled amino acids in a list
-                            return [aa for aa in labeled_amino_acids]
-            else:
-                print("\nInvalid input. Please enter 'Y' (yes) or 'N' (no).")
 
 
     def get_composition(self):
@@ -145,33 +46,33 @@ class Peptide():
         peptide_composition["oxygens"] += 1
         
         # Check cysteine modifications
-        if self.cysteine_treatment is not None:
-            if self.cysteine_treatment == "amide":
+        if "C" in self.sequence:
+            if self.cysteine_treatment == "Iodo- or chloroacetamide":
                 # Replace H in cysteine -SH group by -CH2-CO-NH2 group, for each cysteine
                 peptide_composition["carbons"] += 2 * self.sequence.count("C")
                 peptide_composition["hydrogens"] += 3 * self.sequence.count("C") # Difference of 3 H
                 peptide_composition["nitrogens"] += self.sequence.count("C")
                 peptide_composition["oxygens"] += self.sequence.count("C")
-            elif self.cysteine_treatment == "acid":
+            elif self.cysteine_treatment == "Iodo- or chloroacetic acid":
                 # Replace H in cysteine -SH group by -CH2-CO-OH group, for each cysteine
                 peptide_composition["carbons"] += 2 * self.sequence.count("C")
                 peptide_composition["hydrogens"] += 2 * self.sequence.count("C")  # Difference of 2 H
                 peptide_composition["oxygens"] += 2 * self.sequence.count("C")
 
-        # Check methionine oxidation
-        if self.methionine_oxidation is not None:
-            if self.methionine_oxidation:
-                # Add oxygen atom for each methionine
-                peptide_composition["oxygens"] += self.sequence.count("M")
+        # # Check methionine oxidation
+        # if self.methionine_oxidation is not None:
+        #     if self.methionine_oxidation:
+        #         # Add oxygen atom for each methionine
+        #         peptide_composition["oxygens"] += self.sequence.count("M")
 
-        # Check isotope labeling
-        if self.isotope_labeling is not None:
-            # Loop over the labeled amino acids
-            # C and N in these amino acids are always C-13 and N-15 (no variation)
-            # Must be removed from the composition written to the block file 
-            for aa in self.isotope_labeling:
-                peptide_composition["carbons"] -= amino_acids.compositions[aa]["carbons"] * self.sequence.count(aa)
-                peptide_composition["nitrogens"] -= amino_acids.compositions[aa]["nitrogens"] * self.sequence.count(aa)
+        # # Check isotope labeling
+        # if self.isotope_labeling is not None:
+        #     # Loop over the labeled amino acids
+        #     # C and N in these amino acids are always C-13 and N-15 (no variation)
+        #     # Must be removed from the composition written to the block file 
+        #     for aa in self.isotope_labeling:
+        #         peptide_composition["carbons"] -= amino_acids.compositions[aa]["carbons"] * self.sequence.count(aa)
+        #         peptide_composition["nitrogens"] -= amino_acids.compositions[aa]["nitrogens"] * self.sequence.count(aa)
                 
         return peptide_composition
         
@@ -193,37 +94,38 @@ class Peptide():
         peptide_mass += constants.WATER_MASS
 
         # Check cysteine modifications
-        if self.cysteine_treatment is not None:
-            if self.cysteine_treatment == "amide":
+        if "C" in self.sequence:
+            if self.cysteine_treatment == "Iodo- or chloroacetamide":
                 peptide_mass += (constants.ACETAMIDE_GROUP_MASS - constants.HYDROGEN_MASS) * self.sequence.count("C")
-            elif self.cysteine_treatment == "acid":
+            elif self.cysteine_treatment == "Iodo- or chloroacetic acid":
                 peptide_mass += (constants.ACETIC_ACID_GROUP_MASS - constants.HYDROGEN_MASS) * self.sequence.count("C")
 
-        # Check methionine oxidation
-        if self.methionine_oxidation is not None:
-            if self.methionine_oxidation:
-                # Add oxygen mass for each methionine residue
-                peptide_mass += constants.OXYGEN_MASS * self.sequence.count("M")
+        # # Check methionine oxidation
+        # if self.methionine_oxidation is not None:
+        #     if self.methionine_oxidation:
+        #         # Add oxygen mass for each methionine residue
+        #         peptide_mass += constants.OXYGEN_MASS * self.sequence.count("M")
 
-        # Check isotope labeling
-        if self.isotope_labeling is not None:
-            # Loop over the labeled amino acids and increase mass
-            for aa in self.isotope_labeling:
-                peptide_mass += constants.C13_MASS_DIFF * amino_acids.compositions[aa]["carbons"] * self.sequence.count(aa)
-                peptide_mass += constants.N15_MASS_DIFF * amino_acids.compositions[aa]["nitrogens"] * self.sequence.count(aa)
+        # # Check isotope labeling
+        # if self.isotope_labeling is not None:
+        #     # Loop over the labeled amino acids and increase mass
+        #     for aa in self.isotope_labeling:
+        #         peptide_mass += constants.C13_MASS_DIFF * amino_acids.compositions[aa]["carbons"] * self.sequence.count(aa)
+        #         peptide_mass += constants.N15_MASS_DIFF * amino_acids.compositions[aa]["nitrogens"] * self.sequence.count(aa)
 
         # Return mass rounded to nine decimals
         return round(peptide_mass, 9)
     
 
-    def write_block_file(self):
+    def write_block_file(self, output_dir):
         '''
         Create block file based on composition and mass of the peptide.
-        The location of the block file is printed for the user.
+        The output directory of the block file is printed for the user.
+        Information is written to the log file.
         '''
-        # Print info in terminal and write to log
+        # Write message to log file
         message = (
-            f"Writing sequence '{self.sequence}' info to block file '{self.name}.block':"
+            f"Writing sequence '{self.sequence}' info to block file '{self.block_name}.block':"
             f"\n\tMass = {self.mass:.5f}" 
             f"\n\tCarbons = {self.composition['carbons']}"
             f"\n\tHydrogens = {self.composition['hydrogens']}"
@@ -232,7 +134,6 @@ class Peptide():
             f"\n\tSulfurs = {self.composition['sulfurs']}"
         )
         utils.write_to_log(message)
-        print(f"\nWriting sequence '{self.sequence}' info to block file '{self.name}.block'")
         
         # Create list with lines that should be written
         # "\t" is used to separate named and numbers by a tab
@@ -246,12 +147,12 @@ class Peptide():
             "sulfurs" + "\t" + str(self.composition["sulfurs"])
         ]
 
-        # Write each line to the file
-        filename = self.name + ".block"
+        # Write each line to the file in the specified output directory
+        filename = os.path.join(output_dir, self.block_name + ".block")
         with open(filename, "w") as file:
             for line in lines:
                 file.write(line + "\n")
                 
         # Print location of the created block file.
-        utils.write_to_log(f"'{self.name}.block' file created in directory '{os.getcwd()}'")
-        print(f"\n'{self.name}.block' file created in directory '{os.getcwd()}'")
+        utils.write_to_log(f"'{self.block_name}.block' file created in directory '{output_dir}'")
+        print(f"\n'{self.block_name}.block' file created in directory '{output_dir}'")

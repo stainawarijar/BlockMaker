@@ -199,9 +199,27 @@ class MainWindow(QMainWindow):
 
     def generate_blocks(self):
         '''Generate block files for valid entries in the sequence table'''
+        # TODO: methionine oxidation and heavy isotope labeling
         # Get a dictionary with valid sequence entries
         sequences = self.valid_sequence_entries()
-        print(sequences)
+        for block_name, sequence in sequences.items():
+            # Create instance of Peptide class
+            peptide = Peptide(
+                block_name, sequence,
+                cysteine_treatment = self.ui.comboBox_C_treatment.currentText()
+            )
+            # Write message to log file
+            utils.write_to_log(f"Start processing block '{block_name}' with sequence '{sequence}'...")
+            if "C" in peptide.sequence:
+                if peptide.cysteine_treatment == "Iodo- or chloroacetamide":
+                    utils.write_to_log("Cysteines treated with iodo- or chloroacetamide.")
+                elif peptide.cysteine_treatment == "Iodo- or chloroacetic acid":
+                    utils.write_to_log("Cysteines treated with iodo- or chloroacetic acid.")
+                else:
+                    utils.write_to_log("Cysteines untreated (reduced form).")
+                
+            # Create block file
+            peptide.write_block_file(output_dir = self.ui.listWidget_outputdir.item(0).text())
 
 
     def valid_sequence_entries(self):
