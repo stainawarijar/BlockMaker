@@ -39,6 +39,19 @@ class MainWindow(QMainWindow):
         msg_box.exec()
 
 
+    def open_output_dir(self):
+        '''
+        Open a file dialog for selecting an output directory.
+        Display the location of the directory in the UI.
+        '''
+        dir_path = QFileDialog.getExistingDirectory(None, "Select Output Directory", "")
+        if dir_path:
+            # Clear existing entry
+            self.ui.listWidget_outputdir.clear()
+            # Add directory location
+            self.ui.listWidget_outputdir.addItem(dir_path)
+
+
     def open_text_file(self):
         '''
         Open a file dialog for selecting a text file with peptide sequences.
@@ -69,58 +82,6 @@ class MainWindow(QMainWindow):
                         continue
                     else:
                         self.create_table_entry(sequence)
-
-
-    def check_sequence_table_edit(self, item):
-        '''Check the validity of an edited sequence entry in the table.'''
-        # Get row and column number of the changed item
-        row = item.row()
-        column = item.column() 
-        # Temporarily disconnect the signal to prevent recursion
-        # Because changing background color of an entry triggers signal
-        self.ui.tableWidget_sequences.itemChanged.disconnect(self.check_sequence_table_edit)
-        # Check changes
-        try:
-            if column == 0:  # The block name was edited
-                # Remove leading/trailing spaces
-                block_name = item.text().strip()
-                self.ui.tableWidget_sequences.item(row, column).setText(block_name)
-                # Check its validity: only letters or underscores 
-                valid_block = all(char.isalpha() or char == "_" for char in block_name)
-                if not valid_block or block_name == "":
-                    # Highlight the corresponding entry
-                    self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.red)
-                    # Show warning if the entry is invalid (not if it is empty)
-                    self.show_warning(
-                        title = "Invalid block name",
-                        text = "Block names may only contain letters and underscores.",
-                        informative_text = f"Adjust block name '{block_name}' or no file will be created for it!"
-                    )
-                else:
-                    # Remove highlight
-                    self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.transparent)
-            else:  # The sequence was edited
-                # Remove trailing/leading spaces and capitalize
-                sequence = item.text().strip().upper()
-                self.ui.tableWidget_sequences.item(row, column).setText(sequence)
-                # Check validity of the sequence
-                invalid = utils.check_sequence_validity(sequence)
-                if (len(invalid["positions"])) > 0 or sequence == "":
-                    # Highlight the corresponding entry
-                    self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.red)
-                    if len(invalid["positions"]) > 0:
-                    # Show warning in case of invalid entry (not if it is empty)
-                        self.show_warning(
-                            title = "Invalid sequence",
-                            text = utils.generate_invalid_sequence_warning(invalid, sequence),
-                            informative_text = "Adjust this sequence or no block file will be created for it!"
-                        )
-                else:
-                    # Remove highlight
-                    self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.transparent)
-        finally:
-            # Reconnect the signal
-            self.ui.tableWidget_sequences.itemChanged.connect(self.check_sequence_table_edit)
 
 
     def add_sequence(self):
@@ -170,8 +131,12 @@ class MainWindow(QMainWindow):
 
 
     def delete_sequence(self):
-        '''Delete selected rows in the sequence table.'''
+        '''Delete selected rows from the sequence table.'''
+        # Get indices of selected rows
+        # A set is used because it automatically removes duplicate indices (when both block and sequence in a row are selected)
         selected_rows = set(index.row() for index in self.ui.tableWidget_sequences.selectedIndexes())
+        # Remove entries from table
+        # Reverse order iteration is used to prevent issues with indices shifting when rows are removed from the table
         for row in sorted(selected_rows, reverse = True):
             self.ui.tableWidget_sequences.removeRow(row)
 
@@ -182,19 +147,77 @@ class MainWindow(QMainWindow):
         self.ui.listWidget_filelocation.clear()
 
 
-    def open_output_dir(self):
-        '''
-        Open a file dialog for selecting an output directory.
-        Display the location of the directory in the UI.
-        '''
-        dir_path = QFileDialog.getExistingDirectory(None, "Select Output Directory", "")
-        if dir_path:
-            # Clear existing entries if any
-            self.ui.listWidget_outputdir.clear()
-            # Add directory location
-            self.ui.listWidget_outputdir.addItem(dir_path)
-
+    def check_sequence_table_edit(self, item):
+        '''Check the validity of an edited sequence entry in the table.'''
+        # Get row and column number of the changed item
+        row = item.row()
+        column = item.column() 
+        # Temporarily disconnect the signal to prevent recursion
+        # Because changing background color of an entry triggers signal
+        self.ui.tableWidget_sequences.itemChanged.disconnect(self.check_sequence_table_edit)
+        # Check changes
+        if column == 0:  # The block name was edited
+            # Remove leading/trailing spaces
+            block_name = item.text().strip()
+            self.ui.tableWidget_sequences.item(row, column).setText(block_name)
+            # Check its validity: only letters or underscores 
+            valid_block = all(char.isalpha() or char == "_" for char in block_name)
+            if not valid_block or block_name == "":
+                # Highlight the corresponding entry
+                self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.red)
+                # Show warning if the entry is invalid (not if it is empty)
+                self.show_warning(
+                    title = "Invalid block name",
+                    text = "Block names may only contain letters and underscores.",
+                    informative_text = f"Adjust block name '{block_name}' or no file will be created for it!"
+                )
+            else:
+                # Remove highlight
+                self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.transparent)
+        else:  # The sequence was edited
+            # Remove trailing/leading spaces and capitalize
+            sequence = item.text().strip().upper()
+            self.ui.tableWidget_sequences.item(row, column).setText(sequence)
+            # Check validity of the sequence
+            invalid = utils.check_sequence_validity(sequence)
+            if (len(invalid["positions"])) > 0 or sequence == "":
+                # Highlight the corresponding entry
+                self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.red)
+                if len(invalid["positions"]) > 0:
+                # Show warning in case of invalid entry (not if it is empty)
+                    self.show_warning(
+                        title = "Invalid sequence",
+                        text = utils.generate_invalid_sequence_warning(invalid, sequence),
+                        informative_text = "Adjust this sequence or no block file will be created for it!"
+                    )
+            else:
+                # Remove highlight
+                self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.transparent)
+        # Reconnect the signal
+        self.ui.tableWidget_sequences.itemChanged.connect(self.check_sequence_table_edit)
+    
 
     def generate_blocks(self):
-        print("Generate block files.")
+        '''Generate block files for valid entries in the sequence table'''
+        # Get a dictionary with valid sequence entries
+        sequences = self.valid_sequence_entries()
+        print(sequences)
 
+
+    def valid_sequence_entries(self):
+        '''
+        Determine valid entries in the sequence tableWidget.
+        Return a dictionary with block names as keys and their corresponding sequences as values.
+        '''
+        valid = {}  # Initiate empty dictionary
+        for row in range(self.ui.tableWidget_sequences.rowCount()):
+            block_name_item = self.ui.tableWidget_sequences.item(row, 0)
+            sequence_item = self.ui.tableWidget_sequences.item(row, 1)
+            # Check that neither block_name nor sequence are highlighted in red
+            if (
+                block_name_item and sequence_item and
+                block_name_item.background().color() != Qt.GlobalColor.red and
+                sequence_item.background().color() != Qt.GlobalColor.red
+            ):
+                valid[block_name_item.text()] = sequence_item.text()
+        return valid
