@@ -45,7 +45,7 @@ def generate_invalid_sequence_warning(invalid, sequence):
             " and '" + str(invalid["characters"][-1]) + "'"
         )
         warning_msg = (
-            f"\nCharacters '{characters_join}' at positions {positions_join} "
+            f"\nCharacters {characters_join} at positions {positions_join} "
             f"in sequence '{sequence}' do not correspond to any amino acids."
         )
     return warning_msg

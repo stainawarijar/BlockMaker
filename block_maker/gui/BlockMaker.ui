@@ -672,6 +672,15 @@ background-color: #009900;</string>
       <height>161</height>
      </rect>
     </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::DoubleClicked</set>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
+    </property>
+    <property name="sortingEnabled">
+     <bool>true</bool>
+    </property>
     <attribute name="horizontalHeaderCascadingSectionResizes">
      <bool>false</bool>
     </attribute>
@@ -683,6 +692,9 @@ background-color: #009900;</string>
     </attribute>
     <attribute name="horizontalHeaderStretchLastSection">
      <bool>true</bool>
+    </attribute>
+    <attribute name="verticalHeaderVisible">
+     <bool>false</bool>
     </attribute>
     <attribute name="verticalHeaderCascadingSectionResizes">
      <bool>true</bool>
@@ -723,9 +735,6 @@ font-weight: bold;</string>
     </property>
     <property name="text">
      <string>Delete all</string>
-    </property>
-    <property name="shortcut">
-     <string>Del</string>
     </property>
    </widget>
    <widget class="QFrame" name="frame_2">

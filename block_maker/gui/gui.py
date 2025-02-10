@@ -308,6 +308,8 @@ class Ui_MainWindow(object):
         self.listWidget_outputdir.setObjectName("listWidget_outputdir")
         self.tableWidget_sequences = QtWidgets.QTableWidget(parent=self.centralwidget)
         self.tableWidget_sequences.setGeometry(QtCore.QRect(20, 300, 521, 161))
+        self.tableWidget_sequences.setEditTriggers(QtWidgets.QAbstractItemView.EditTrigger.DoubleClicked)
+        self.tableWidget_sequences.setAlternatingRowColors(True)
         self.tableWidget_sequences.setObjectName("tableWidget_sequences")
         self.tableWidget_sequences.setColumnCount(2)
         self.tableWidget_sequences.setRowCount(0)
@@ -319,6 +321,7 @@ class Ui_MainWindow(object):
         self.tableWidget_sequences.horizontalHeader().setDefaultSectionSize(100)
         self.tableWidget_sequences.horizontalHeader().setSortIndicatorShown(True)
         self.tableWidget_sequences.horizontalHeader().setStretchLastSection(True)
+        self.tableWidget_sequences.verticalHeader().setVisible(False)
         self.tableWidget_sequences.verticalHeader().setCascadingSectionResizes(True)
         self.pushButton_deleteall = QtWidgets.QPushButton(parent=self.centralwidget)
         self.pushButton_deleteall.setGeometry(QtCore.QRect(170, 260, 91, 21))
@@ -407,12 +410,12 @@ class Ui_MainWindow(object):
         self.label1.setText(_translate("MainWindow", "Import text file with sequences:"))
         self.toolButton_openfile.setText(_translate("MainWindow", "..."))
         self.pushButton_generateblocks.setText(_translate("MainWindow", "Generate block files"))
+        self.tableWidget_sequences.setSortingEnabled(True)
         item = self.tableWidget_sequences.horizontalHeaderItem(0)
         item.setText(_translate("MainWindow", "Block name"))
         item = self.tableWidget_sequences.horizontalHeaderItem(1)
         item.setText(_translate("MainWindow", "Sequence"))
         self.pushButton_deleteall.setText(_translate("MainWindow", "Delete all"))
-        self.pushButton_deleteall.setShortcut(_translate("MainWindow", "Del"))
 
 
 if __name__ == "__main__":

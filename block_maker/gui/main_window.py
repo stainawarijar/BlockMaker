@@ -40,9 +40,14 @@ class MainWindow(QMainWindow):
         Read the peptide sequences line by line, check their validity and add them to the list.
         '''
         file_path, _ = QFileDialog.getOpenFileName(None, "Select a Text File", "", "Text Files (*.txt);;All Files (*)")
-        self.ui.listWidget_filelocation.clear()
-        self.ui.listWidget_filelocation.addItem(file_path)
         if file_path:
+            # Clear existing table entries if a text file was loaded previously
+            if self.ui.listWidget_filelocation.count() > 0:
+                self.ui.tableWidget_sequences.clearContents()
+                self.ui.tableWidget_sequences.setRowCount(0)
+                self.ui.listWidget_filelocation.clear()
+            # Add file location
+            self.ui.listWidget_filelocation.addItem(file_path)
             # Read sequences from file
             with open(file_path, "r") as file:
                 for line in file:
@@ -51,29 +56,49 @@ class MainWindow(QMainWindow):
                     # Skip empty lines
                     if sequence == "":
                         continue
-                    # Check validity of the sequence
-                    invalid = utils.check_sequence_validity(sequence)
-                    if len(invalid["positions"]) > 0:
-                        # Show a warning
-                        self.show_warning(
-                            title = "Oops!",
-                            text = utils.generate_invalid_sequence_warning(invalid, sequence),
-                            informative_text = (
-                                "Please adjust your text file, "
-                                "or no block file will be created for this sequence!"
-                            )
-                        )
+                    # Check if the sequence is not a duplicate
+                    elif any(
+                        self.ui.tableWidget_sequences.item(row, 1) and 
+                        self.ui.tableWidget_sequences.item(row, 1).text() == sequence 
+                        for row in range(self.ui.tableWidget_sequences.rowCount())
+                    ):
+                        continue
                     else:
-                        # Add to sequence table
+                        # Check validity of the sequence
+                        invalid = utils.check_sequence_validity(sequence)
+                        if len(invalid["positions"]) > 0:
+                            # Show a warning
+                            self.show_warning(
+                                title = "Oops!",
+                                text = utils.generate_invalid_sequence_warning(invalid, sequence),
+                                informative_text = ("Adjust this sequence or no block file will be created for it!")
+                            )
+                        # Add sequence to table (editable)
+                        # Invalid sequences are still added because they can be modified in the table
                         row_position = self.ui.tableWidget_sequences.rowCount()
                         self.ui.tableWidget_sequences.insertRow(row_position)
-                        self.ui.tableWidget_sequences.setItem(row_position, 0, QTableWidgetItem(sequence))
-
+                        self.ui.tableWidget_sequences.setItem(row_position, 1, QTableWidgetItem(sequence))
+                        # Add a block name (editable)
+                        # First four letters of peptide by default
+                        # If already present, add "_b", "_c" etc as suffix
+                        block_name = sequence[0:4]
+                        suffix = "b"
+                        while any(
+                            self.ui.tableWidget_sequences.item(row, 0) and 
+                            self.ui.tableWidget_sequences.item(row, 0).text() == block_name 
+                            for row in range(self.ui.tableWidget_sequences.rowCount())
+                        ):
+                            block_name = sequence[0:4] + '_' + suffix
+                            suffix = chr(ord(suffix) + 1)
+                        self.ui.tableWidget_sequences.setItem(row_position, 0, QTableWidgetItem(block_name))
+                        # If the sequence is invalid, highlight the row in red
+                        if len(invalid["positions"]) > 0:
+                            for column in range(self.ui.tableWidget_sequences.columnCount()):
+                                self.ui.tableWidget_sequences.item(row_position, column).setBackground(Qt.GlobalColor.red)
 
     def add_sequence(self):
         print("Add a sequence.")
         
-
     def delete_sequence(self):
         print("Delete selected sequence.")
 
