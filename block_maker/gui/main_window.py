@@ -131,8 +131,13 @@ class MainWindow(QMainWindow):
                 informative_text = "Adjust the sequence and try again."
                 )
         elif sequence == "":
-            # Do nothing in case of empty sequence
-            pass
+            pass  # Do nothing in case of empty sequence
+        elif any(
+            self.ui.tableWidget_sequences.item(row, 1) and 
+            self.ui.tableWidget_sequences.item(row, 1).text() == sequence 
+            for row in range(self.ui.tableWidget_sequences.rowCount())
+        ):
+            pass  # Do nothing in case of duplicate sequence
         else:
             self.create_table_entry(sequence)
     
