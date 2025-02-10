@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>567</width>
-    <height>596</height>
+    <width>562</width>
+    <height>545</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,7 +84,7 @@
       <x>280</x>
       <y>20</y>
       <width>261</width>
-      <height>261</height>
+      <height>271</height>
      </rect>
     </property>
     <property name="font">
@@ -95,7 +95,7 @@
     </property>
     <property name="styleSheet">
      <string notr="true">QGroupBox {
-    border: 1px solid black;
+    border: 1px solid darkgray;
 }</string>
     </property>
     <property name="title">
@@ -163,12 +163,12 @@
        <x>10</x>
        <y>140</y>
        <width>241</width>
-       <height>111</height>
+       <height>121</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">QGroupBox {
-    border: 1px solid darkgray;
+    border: 1px solid gray;
 }</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
@@ -488,6 +488,7 @@
       <font>
        <family>DejaVu Sans</family>
        <pointsize>10</pointsize>
+       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -515,7 +516,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Block files output directory:</string>
+     <string>Output directory for block files:</string>
     </property>
    </widget>
    <widget class="QToolButton" name="toolButton_openoutputdir">
@@ -523,8 +524,8 @@
      <rect>
       <x>240</x>
       <y>50</y>
-      <width>23</width>
-      <height>20</height>
+      <width>21</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="text">
@@ -536,7 +537,7 @@
      <rect>
       <x>30</x>
       <y>260</y>
-      <width>121</width>
+      <width>131</width>
       <height>21</height>
      </rect>
     </property>
@@ -544,12 +545,15 @@
      <font>
       <family>DejaVu Sans</family>
       <pointsize>10</pointsize>
-      <italic>true</italic>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-style: italic;
-background-color: darkblue;</string>
+     <string notr="true">background-color: #0066ff;
+font-style: normal;
+font-weight: bold;</string>
     </property>
     <property name="text">
      <string>Delete selected</string>
@@ -590,9 +594,9 @@ background-color: darkblue;</string>
    <widget class="QPushButton" name="pushButton_generateblocks">
     <property name="geometry">
      <rect>
-      <x>180</x>
-      <y>530</y>
-      <width>211</width>
+      <x>170</x>
+      <y>480</y>
+      <width>231</width>
       <height>41</height>
      </rect>
     </property>
@@ -600,15 +604,16 @@ background-color: darkblue;</string>
      <font>
       <family>DejaVu Sans</family>
       <pointsize>12</pointsize>
-      <italic>true</italic>
+      <weight>75</weight>
+      <italic>false</italic>
       <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
      <string notr="true">font-weight: bold;
-font-style: italic;
+font-style: normal;
 font-size: 12pt;
-background-color: darkgreen;</string>
+background-color: #009900;</string>
     </property>
     <property name="text">
      <string>Generate block files</string>
@@ -661,10 +666,10 @@ background-color: darkgreen;</string>
    <widget class="QTableWidget" name="tableWidget_sequences">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>20</x>
       <y>300</y>
-      <width>511</width>
-      <height>221</height>
+      <width>521</width>
+      <height>161</height>
      </rect>
     </property>
     <attribute name="horizontalHeaderCascadingSectionResizes">
@@ -673,26 +678,32 @@ background-color: darkgreen;</string>
     <attribute name="horizontalHeaderDefaultSectionSize">
      <number>100</number>
     </attribute>
+    <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="horizontalHeaderStretchLastSection">
+     <bool>true</bool>
+    </attribute>
     <attribute name="verticalHeaderCascadingSectionResizes">
      <bool>true</bool>
     </attribute>
     <column>
      <property name="text">
-      <string>Sequence</string>
+      <string>Block name</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>Block name</string>
+      <string>Sequence</string>
      </property>
     </column>
    </widget>
    <widget class="QPushButton" name="pushButton_deleteall">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>170</x>
       <y>260</y>
-      <width>101</width>
+      <width>91</width>
       <height>21</height>
      </rect>
     </property>
@@ -700,12 +711,15 @@ background-color: darkgreen;</string>
      <font>
       <family>DejaVu Sans</family>
       <pointsize>10</pointsize>
-      <italic>true</italic>
+      <weight>75</weight>
+      <italic>false</italic>
+      <bold>true</bold>
      </font>
     </property>
     <property name="styleSheet">
-     <string notr="true">font-style: italic;
-background-color: darkred;</string>
+     <string notr="true">background-color: #cc0000;
+font-style: normal;
+font-weight: bold;</string>
     </property>
     <property name="text">
      <string>Delete all</string>
@@ -714,6 +728,60 @@ background-color: darkred;</string>
      <string>Del</string>
     </property>
    </widget>
+   <widget class="QFrame" name="frame_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>251</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 1px solid darkgray;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <widget class="QFrame" name="frame_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>251</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 1px solid darkgray;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+   </widget>
+   <zorder>frame_3</zorder>
+   <zorder>frame_2</zorder>
+   <zorder>lineEdit_sequence</zorder>
+   <zorder>label2</zorder>
+   <zorder>pushButton_addsequence</zorder>
+   <zorder>groupBox</zorder>
+   <zorder>label6</zorder>
+   <zorder>toolButton_openoutputdir</zorder>
+   <zorder>pushButton_deletesequence</zorder>
+   <zorder>label1</zorder>
+   <zorder>toolButton_openfile</zorder>
+   <zorder>pushButton_generateblocks</zorder>
+   <zorder>listWidget_filelocation</zorder>
+   <zorder>listWidget_outputdir</zorder>
+   <zorder>tableWidget_sequences</zorder>
+   <zorder>pushButton_deleteall</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
