@@ -1,3 +1,4 @@
+import os
 from PyQt6.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem
 from PyQt6.QtCore import Qt
 from .gui import Ui_MainWindow
@@ -10,6 +11,9 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self) 
+
+        # Set the initial output directory to the current directory
+        self.ui.listWidget_outputdir.addItem(os.getcwd())
 
         # Connect button click signals to functions
         self.ui.toolButton_openfile.clicked.connect(self.open_text_file)
@@ -179,7 +183,16 @@ class MainWindow(QMainWindow):
 
 
     def open_output_dir(self):
-        print("Select an output directory.")
+        '''
+        Open a file dialog for selecting an output directory.
+        Display the location of the directory in the UI.
+        '''
+        dir_path = QFileDialog.getExistingDirectory(None, "Select Output Directory", "")
+        if dir_path:
+            # Clear existing entries if any
+            self.ui.listWidget_outputdir.clear()
+            # Add directory location
+            self.ui.listWidget_outputdir.addItem(dir_path)
 
 
     def generate_blocks(self):
