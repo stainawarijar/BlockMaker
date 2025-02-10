@@ -152,9 +152,11 @@ class MainWindow(QMainWindow):
         # Get row and column number of the changed item
         row = item.row()
         column = item.column() 
+
         # Temporarily disconnect the signal to prevent recursion
         # Because changing background color of an entry triggers signal
         self.ui.tableWidget_sequences.itemChanged.disconnect(self.check_sequence_table_edit)
+
         # Check changes
         if column == 0:  # The block name was edited
             # Remove leading/trailing spaces
@@ -195,13 +197,44 @@ class MainWindow(QMainWindow):
             else:
                 # Remove highlight
                 self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.transparent)
+                
         # Reconnect the signal
         self.ui.tableWidget_sequences.itemChanged.connect(self.check_sequence_table_edit)
     
 
+    def labeled_amino_acids(self):
+        '''Returns a list with labeled amino acids based on the checkboxes'''
+        labeled = []
+        checkboxes = {
+            "A": self.ui.checkBox_A,
+            "R": self.ui.checkBox_R,
+            "N": self.ui.checkBox_N,
+            "D": self.ui.checkBox_D,
+            "C": self.ui.checkBox_C,
+            "E": self.ui.checkBox_E,
+            "Q": self.ui.checkBox_Q,
+            "G": self.ui.checkBox_G,
+            "H": self.ui.checkBox_H,
+            "I": self.ui.checkBox_I,
+            "L": self.ui.checkBox_L,
+            "K": self.ui.checkBox_K,
+            "M": self.ui.checkBox_M,
+            "F": self.ui.checkBox_F,
+            "P": self.ui.checkBox_P,
+            "S": self.ui.checkBox_S,
+            "T": self.ui.checkBox_T,
+            "W": self.ui.checkBox_W,
+            "Y": self.ui.checkBox_Y,
+            "V": self.ui.checkBox_V
+        }
+        for amino_acid, checkbox in checkboxes.items():
+            if checkbox.isChecked():
+                labeled.append(amino_acid)
+        return labeled
+
+
     def generate_blocks(self):
         '''Generate block files for valid entries in the sequence table'''
-        # TODO: heavy isotope labeling
         # Get a dictionary with valid sequence entries
         sequences = self.valid_sequence_entries()
         for block_name, sequence in sequences.items():
@@ -209,10 +242,12 @@ class MainWindow(QMainWindow):
             peptide = Peptide(
                 block_name, sequence,
                 cysteine_treatment = self.ui.comboBox_C_treatment.currentText(),
-                methionine_oxidation = self.ui.radioButton_M_oxidation.isChecked()  # Boolean
+                methionine_oxidation = self.ui.radioButton_M_oxidation.isChecked(),
+                isotope_labeling = self.labeled_amino_acids()
             )
             # Write message to log file
             utils.write_to_log(f"Start processing block '{block_name}' with sequence '{sequence}'...")
+
             if "C" in peptide.sequence:
                 if peptide.cysteine_treatment == "Iodo- or chloroacetamide":
                     utils.write_to_log("Cysteines treated with iodo- or chloroacetamide.")
@@ -220,8 +255,12 @@ class MainWindow(QMainWindow):
                     utils.write_to_log("Cysteines treated with iodo- or chloroacetic acid.")
                 else:
                     utils.write_to_log("Cysteines untreated (reduced form).")
+
             if "M" in peptide.sequence and peptide.methionine_oxidation:
                 utils.write_to_log("Methionines oxidized.")
+            
+            if len(peptide.isotope_labeling) > 0:
+                utils.write_to_log(f"C-13 and N-15 labeled amino acids: {", ".join(peptide.isotope_labeling)}")
 
             # Create block file
             peptide.write_block_file(output_dir = self.ui.listWidget_outputdir.item(0).text())

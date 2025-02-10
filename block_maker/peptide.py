@@ -5,12 +5,12 @@ from .resources import constants
 
 
 class Peptide():
-    def __init__(self, block_name, sequence, cysteine_treatment, methionine_oxidation):
+    def __init__(self, block_name, sequence, cysteine_treatment, methionine_oxidation, isotope_labeling):
         self.block_name = block_name
         self.sequence = sequence
         self.cysteine_treatment = cysteine_treatment
         self.methionine_oxidation = methionine_oxidation
-        # self.isotope_labeling = 
+        self.isotope_labeling = isotope_labeling
         self.composition = self.get_composition()
         self.mass = self.calculate_peptide_mass()
 
@@ -64,14 +64,14 @@ class Peptide():
             # Add oxygen atom for each methionine residue
             peptide_composition["oxygens"] += self.sequence.count("M")
 
-        # # Check isotope labeling
-        # if self.isotope_labeling is not None:
-        #     # Loop over the labeled amino acids
-        #     # C and N in these amino acids are always C-13 and N-15 (no variation)
-        #     # Must be removed from the composition written to the block file 
-        #     for aa in self.isotope_labeling:
-        #         peptide_composition["carbons"] -= amino_acids.compositions[aa]["carbons"] * self.sequence.count(aa)
-        #         peptide_composition["nitrogens"] -= amino_acids.compositions[aa]["nitrogens"] * self.sequence.count(aa)
+        # Check list with isotope labeled amino acids
+        if len(self.isotope_labeling) > 0:
+            # Loop over the labeled amino acids
+            # C and N in these amino acids are always C-13 and N-15 (no variation)
+            # Must be removed from the composition written to the block file 
+            for aa in self.isotope_labeling:
+                peptide_composition["carbons"] -= amino_acids.compositions[aa]["carbons"] * self.sequence.count(aa)
+                peptide_composition["nitrogens"] -= amino_acids.compositions[aa]["nitrogens"] * self.sequence.count(aa)
                 
         return peptide_composition
         
@@ -104,12 +104,12 @@ class Peptide():
             # Add oxygen mass for each methionine residue
             peptide_mass += constants.OXYGEN_MASS * self.sequence.count("M")
 
-        # # Check isotope labeling
-        # if self.isotope_labeling is not None:
-        #     # Loop over the labeled amino acids and increase mass
-        #     for aa in self.isotope_labeling:
-        #         peptide_mass += constants.C13_MASS_DIFF * amino_acids.compositions[aa]["carbons"] * self.sequence.count(aa)
-        #         peptide_mass += constants.N15_MASS_DIFF * amino_acids.compositions[aa]["nitrogens"] * self.sequence.count(aa)
+        # Check list with isotope labeled amino acids
+        if len(self.isotope_labeling) > 0:
+            # Loop over the labeled amino acids and increase mass
+            for aa in self.isotope_labeling:
+                peptide_mass += constants.C13_MASS_DIFF * amino_acids.compositions[aa]["carbons"] * self.sequence.count(aa)
+                peptide_mass += constants.N15_MASS_DIFF * amino_acids.compositions[aa]["nitrogens"] * self.sequence.count(aa)
 
         # Return mass rounded to nine decimals
         return round(peptide_mass, 9)
