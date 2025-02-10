@@ -25,8 +25,13 @@ Below are short descriptions of the different options in BlockMaker.
     - Choose modifications for amino acid residues:
         - Cysteine treatment.
         - Methionine oxidation (one extra oxygen atom per M residue).
-        - Stable isotope labeling with carbon-13 and nitrogen-15. When an amino acid is checked, all corresponding residues are fully labeled (i.e., all carbons are C-13 and all nitrogens are N-15).
+        - Stable isotope labeling with carbon-13 and nitrogen-15. When an amino acid is checked, all corresponding residues are assumed to be fully labeled (i.e., all carbons are C-13 and all nitrogens are N-15).
 
-The table lists all block names and their corresponding sequences. When a peptide sequence is added to the table, a block name is generated automatically based on the first four letters of the sequence. If this results in a duplicate block name, a suffix ("_b", "_c", etc.) is added. All entries in the table can be edited via double-clicking, allowing you to specify your own block names or correct a sequence. You can delete selected or all rows from the table by clicking the corresponding buttons.
+The table lists all block names and their corresponding sequences. 
+When a peptide sequence is added to the table, a block name is generated automatically based on the first four letters of the sequence. 
+If this results in a duplicate block name, a suffix ("_b", "_c", etc.) is added. 
+All entries in the table can be edited via double-clicking, allowing you to specify your own block names or to correct a sequence. 
+By clicking the corresponding buttons, you can delete either a selection of entries or all of them.
 
-The **"Generate block files"** button does exactly what it says. It will create block files based on the sequences and modifications specified in the table. Ensure all desired modifications and sequences are correctly entered before clicking this button.
+The **"Generate block files"** will create block files based on the sequences and modifications specified in the table. 
+Ensure all desired modifications and sequences are correctly entered before clicking this button.
