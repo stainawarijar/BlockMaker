@@ -64,22 +64,7 @@ class MainWindow(QMainWindow):
                     ):
                         continue
                     else:
-                        # Add sequence to table (editable)
-                        row_position = self.ui.tableWidget_sequences.rowCount()
-                        self.ui.tableWidget_sequences.insertRow(row_position)
-                        self.ui.tableWidget_sequences.setItem(row_position, 1, QTableWidgetItem(sequence))
-                        # Add a block name (editable), first four letters of peptide by default
-                        # If already present, add "_b", "_c" etc as suffix
-                        block_name = sequence[0:4]
-                        suffix = "b"
-                        while any(
-                            self.ui.tableWidget_sequences.item(row, 0) and 
-                            self.ui.tableWidget_sequences.item(row, 0).text() == block_name 
-                            for row in range(self.ui.tableWidget_sequences.rowCount())
-                        ):
-                            block_name = sequence[0:4] + '_' + suffix
-                            suffix = chr(ord(suffix) + 1)
-                        self.ui.tableWidget_sequences.setItem(row_position, 0, QTableWidgetItem(block_name))
+                        self.create_table_entry(sequence)
 
 
     def check_sequence_table_edit(self, item):
@@ -135,8 +120,45 @@ class MainWindow(QMainWindow):
 
 
     def add_sequence(self):
-        print("Add a sequence.")
+        '''Check validity of manual input sequence and add it to table.'''
+        sequence = self.ui.lineEdit_sequence.text().strip().upper()
+        invalid = utils.check_sequence_validity(sequence)
+        if (len(invalid["positions"])) > 0:
+            # Show warning
+            self.show_warning(
+                title = "Invalid sequence",
+                text = utils.generate_invalid_sequence_warning(invalid, sequence),
+                informative_text = "Adjust the sequence and try again."
+                )
+        elif sequence == "":
+            # Do nothing in case of empty sequence
+            pass
+        else:
+            self.create_table_entry(sequence)
     
+
+    def create_table_entry(self, sequence):
+        '''
+        Create an editable entry in the table for a valid sequence.
+        Automatically generates a block name.
+        '''
+        # Add sequence to table (editable)
+        row_position = self.ui.tableWidget_sequences.rowCount()
+        self.ui.tableWidget_sequences.insertRow(row_position)
+        self.ui.tableWidget_sequences.setItem(row_position, 1, QTableWidgetItem(sequence))
+        # Add a block name (editable), first four letters of peptide by default
+        # If already present, add "_b", "_c" etc as suffix
+        block_name = sequence[0:4]
+        suffix = "b"
+        while any(
+            self.ui.tableWidget_sequences.item(row, 0) and 
+            self.ui.tableWidget_sequences.item(row, 0).text() == block_name 
+            for row in range(self.ui.tableWidget_sequences.rowCount())
+        ):
+            block_name = sequence[0:4] + '_' + suffix
+            suffix = chr(ord(suffix) + 1)
+        self.ui.tableWidget_sequences.setItem(row_position, 0, QTableWidgetItem(block_name))
+
 
     def delete_sequence(self):
         print("Delete selected sequence.")
