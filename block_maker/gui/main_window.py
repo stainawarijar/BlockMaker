@@ -27,15 +27,14 @@ class MainWindow(QMainWindow):
         self.ui.tableWidget_sequences.itemChanged.connect(self.check_sequence_table_edit)
 
 
-    def show_warning(self, title, text, informative_text):
-        '''Show a warning message box.'''
+    def show_message_box(self, title, icon, text, informative_text):
+        '''Show a message box with an icon and text.'''
         msg_box = QMessageBox()
-        msg_box.setIcon(QMessageBox.Icon.Warning)
+        msg_box.setWindowTitle(title)
+        msg_box.setIcon(QMessageBox.Icon[icon])
         msg_box.setText(f"<b>{text}</b>")
         msg_box.setInformativeText(informative_text)
-        msg_box.setWindowTitle(title)
         msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
-        msg_box.resize(800, 200)
         msg_box.exec()
 
 
@@ -90,8 +89,9 @@ class MainWindow(QMainWindow):
         invalid = utils.check_sequence_validity(sequence)
         if (len(invalid["positions"])) > 0:
             # Show warning
-            self.show_warning(
+            self.show_message_box(
                 title = "Invalid sequence",
+                icon = "Warning",
                 text = utils.generate_invalid_sequence_warning(invalid, sequence),
                 informative_text = "Adjust the sequence and try again."
                 )
@@ -166,8 +166,9 @@ class MainWindow(QMainWindow):
                 # Highlight the corresponding entry
                 self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.red)
                 # Show warning if the entry is invalid (not if it is empty)
-                self.show_warning(
+                self.show_message_box(
                     title = "Invalid block name",
+                    icon = "Warning",
                     text = "Block names may only contain letters and underscores.",
                     informative_text = f"Adjust block name '{block_name}' or no file will be created for it!"
                 )
@@ -185,8 +186,9 @@ class MainWindow(QMainWindow):
                 self.ui.tableWidget_sequences.item(row, column).setBackground(Qt.GlobalColor.red)
                 if len(invalid["positions"]) > 0:
                 # Show warning in case of invalid entry (not if it is empty)
-                    self.show_warning(
+                    self.show_message_box(
                         title = "Invalid sequence",
+                        icon = "Warning",
                         text = utils.generate_invalid_sequence_warning(invalid, sequence),
                         informative_text = "Adjust this sequence or no block file will be created for it!"
                     )
@@ -199,7 +201,7 @@ class MainWindow(QMainWindow):
 
     def generate_blocks(self):
         '''Generate block files for valid entries in the sequence table'''
-        # TODO: methionine oxidation and heavy isotope labeling
+        # TODO: heavy isotope labeling
         # Get a dictionary with valid sequence entries
         sequences = self.valid_sequence_entries()
         for block_name, sequence in sequences.items():
@@ -220,8 +222,21 @@ class MainWindow(QMainWindow):
                     utils.write_to_log("Cysteines untreated (reduced form).")
             if "M" in peptide.sequence and peptide.methionine_oxidation:
                 utils.write_to_log("Methionines oxidized.")
+
             # Create block file
             peptide.write_block_file(output_dir = self.ui.listWidget_outputdir.item(0).text())
+
+        # Show completion popup box
+        if sequences != {}:
+            self.show_message_box(
+                title = "Block files generated",
+                icon = "Information",
+                text = (
+                    "The following block files were generated in directory "
+                    f"{self.ui.listWidget_outputdir.item(0).text()}: "
+                ),
+                informative_text = ", ".join([key + ".block" for key in sequences.keys()])
+            )
 
 
     def valid_sequence_entries(self):
