@@ -5,11 +5,14 @@ BlockMaker is a simple Python program to make block files for [LaCyTools](https:
 
 ## How to run BlockMaker
 - 🪟 **Windows users:**
-    - Install [Python 3.13](https://www.python.org/downloads/) (earlier versions may or may not work).
-      It can also be installed via the Microsoft Store.
-    - Download this repository as a zip file (click the green "Code" button at the top, then "Download ZIP").
-      Extract the contents to some folder on your PC.
-    - Double-click the file "block_maker.bat". This will create a virtual environment, automatically install the required dependencies, and then run the program.
+    - The easiest option is to click on the latest release in the sidebar and download the attached executable file.
+      Double click the .exe file to run BlockMaker.
+    - Alternatively:
+        - Install [Python 3.13](https://www.python.org/downloads/) (earlier versions may or may not work).
+         It can also be installed via the Microsoft Store.
+        - Click on the latest release in the sidebar and download the zip file with the source code.
+        Extract the contents to some location on your computer.
+        - Double-click the file "block_maker.bat". This will create a virtual environment, automatically install the required dependencies, and then run the program.
 - 🐧 **Linux users:** you can figure this out.
 - 🍎 **MacOS users:** I wouldn't know...
 
